@@ -2,6 +2,9 @@ package com.sonika.nepstra;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spanned;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +16,8 @@ import com.sonika.nepstra.helpers.MySharedPreference;
 import com.sonika.nepstra.helpers.OrderHelper;
 import com.sonika.nepstra.pojo.AllProducts;
 import com.sonika.nepstra.pojo.OrderedProducts_pojo;
+
+import static org.jsoup.nodes.Document.OutputSettings.Syntax.html;
 
 
 public class DetailsActivity extends AppCompatActivity {
@@ -26,25 +31,41 @@ public class DetailsActivity extends AppCompatActivity {
     OrderHelper dbHelper;
      @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
-        dbHelper = new OrderHelper(DetailsActivity.this);
-        sharedPreference = new MySharedPreference(DetailsActivity.this);
-        GsonBuilder builder = new GsonBuilder();
-        gson = builder.create();
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_details);
+         dbHelper = new OrderHelper(DetailsActivity.this);
+         sharedPreference = new MySharedPreference(DetailsActivity.this);
+         GsonBuilder builder = new GsonBuilder();
+         gson = builder.create();
 
-        final AllProducts allProducts = (AllProducts) getIntent().getSerializableExtra("hello");
+         final AllProducts allProducts = (AllProducts) getIntent().getSerializableExtra("hello");
 
-        imageview_details = (ImageView) findViewById(R.id.image);
-        textView_name_details = (TextView) findViewById(R.id.txt_name);
-        textView_desc_details = (TextView) findViewById(R.id.txt_desc);
-        textView_price_details = (TextView) findViewById(R.id.txt_price);
-        // addToCart = (Button) findViewById(R.id.buttonCart);
+         imageview_details = (ImageView) findViewById(R.id.image);
+         textView_name_details = (TextView) findViewById(R.id.txt_name);
+         textView_desc_details = (TextView) findViewById(R.id.txt_desc);
+         textView_price_details = (TextView) findViewById(R.id.txt_price);
 
-        Glide.with(DetailsActivity.this).load(allProducts.getI_src()).into(imageview_details);
-        textView_desc_details.setText(allProducts.getDescription());
-        textView_price_details.setText(allProducts.getPrice());
-        textView_name_details.setText(allProducts.getName());
+
+         Spanned withouthtml = stripHtml(allProducts.getDescription());
+         Log.e("test", String.valueOf(withouthtml));
+
+         Glide.with(DetailsActivity.this).load(allProducts.getI_src()).into(imageview_details);
+         textView_price_details.setText(allProducts.getPrice());
+         textView_name_details.setText(allProducts.getName());
+         textView_desc_details.setText(withouthtml);
+
+
+     }
+         public Spanned stripHtml(String html) {
+             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                 return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
+             } else {
+                 return Html.fromHtml(html);
+
+             }
+         }
+
+
 
 
 
@@ -138,4 +159,3 @@ public class DetailsActivity extends AppCompatActivity {
 
 */
     }
-}

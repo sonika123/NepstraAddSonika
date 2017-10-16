@@ -18,9 +18,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.roughike.bottombar.BottomBar;
+import com.sonika.nepstra.Navigations.Womens;
 import com.sonika.nepstra.helpers.MySharedPreference;
+import com.sonika.nepstra.listener.ListViewListener;
+import com.sonika.nepstra.pojo.AllProducts;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.security.AccessController.getContext;
 
@@ -116,7 +122,10 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_mens) {
 
-        } else if (id == R.id.nav_womens) {
+        } else if (id == R.id.nav_womens)
+        {
+            Intent i = new Intent(MainActivity.this, Womens.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_contact) {
 

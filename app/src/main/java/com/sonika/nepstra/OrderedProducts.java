@@ -52,7 +52,6 @@ public class OrderedProducts extends AppCompatActivity implements ListViewListen
 
     @Override
     public void getMyTotal() {
-
         String result = dbhelper.GetTotal();
         totalAmount.setText("Your Toatl Bill Amount Is : " +result);
 

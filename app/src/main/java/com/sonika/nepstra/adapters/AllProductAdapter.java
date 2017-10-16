@@ -16,6 +16,7 @@ import com.sonika.nepstra.DetailsActivity;
 import com.sonika.nepstra.R;
 import com.sonika.nepstra.helpers.MySharedPreference;
 import com.sonika.nepstra.helpers.OrderHelper;
+import com.sonika.nepstra.helpers.WomenHelper;
 import com.sonika.nepstra.pojo.AllProducts;
 import com.squareup.picasso.Picasso;
 
@@ -32,7 +33,9 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
     Gson gson;
     private int cartProductNumber = 0;
     String oname, oprice, oimage;
+    Integer cat_id;
     OrderHelper dbHelper;
+    WomenHelper womenHelper;
     public AllProductAdapter(Context context, List<AllProducts> allproductList) {
         this.context = context;
         this.allProductList = allproductList;
@@ -43,6 +46,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate
                 (R.layout.all_productlist, parent, false);
         dbHelper = new OrderHelper(context);
+        womenHelper = new WomenHelper(context);
         return new AllProductHolder(view);
     }
 
@@ -85,6 +89,20 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
                 dbHelper.insertOrderInfo(contentValues);
             }
         });
+
+        oname = allProductList.get(position).getName();
+        oprice = allProductList.get(position).getPrice();
+        oimage = allProductList.get(position).getI_src();
+        cat_id = allProductList.get(position).getC_id();
+
+        if (cat_id == 29) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("c_id", cat_id);
+            contentValues.put("name", oname);
+            contentValues.put("price", oprice);
+            contentValues.put("imageone", oimage);
+            womenHelper.insertwomen(contentValues);
+        }
     }
 
 

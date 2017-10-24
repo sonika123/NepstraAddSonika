@@ -3,6 +3,7 @@ package com.sonika.nepstra;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,6 +42,7 @@ public class OrderedProducts extends AppCompatActivity implements ListViewListen
 
     public void show() {
         orderedProductsList = dbhelper.getOrderMessage();
+
         for (int i = 0; i < orderedProductsList.size(); i++) {
             final OrderedProducts_pojo info = orderedProductsList.get(i);
             mOrderAdapter = new OrderAdapter(this, orderedProductsList, R.layout.ordered_productlist);

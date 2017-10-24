@@ -1,10 +1,14 @@
 package com.sonika.nepstra;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
+import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +22,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.roughike.bottombar.BottomBar;
+import com.sonika.nepstra.Navigations.ArtAndCraft;
+import com.sonika.nepstra.Navigations.Jwellery;
+import com.sonika.nepstra.Navigations.Kids;
+import com.sonika.nepstra.Navigations.Mens;
+import com.sonika.nepstra.Navigations.NewArrival;
+import com.sonika.nepstra.Navigations.Sports;
 import com.sonika.nepstra.Navigations.Womens;
 import com.sonika.nepstra.helpers.MySharedPreference;
 import com.sonika.nepstra.listener.ListViewListener;
@@ -119,8 +129,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_new_arrival) {
-            // Handle the camera action
+            Intent i = new Intent(MainActivity.this, NewArrival.class);
+            startActivity(i);
         } else if (id == R.id.nav_mens) {
+            Intent i = new Intent(MainActivity.this, Mens.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_womens)
         {
@@ -133,7 +146,12 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_arts_and_craft) {
 
+            Intent i = new Intent(MainActivity.this, ArtAndCraft.class);
+            startActivity(i);
+
         }
+
+
         else if (id == R.id.nav_about_us) {
             Intent intentAboutUs = new Intent(this, LoginActivity.class);
             startActivity(intentAboutUs);
@@ -141,16 +159,22 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_books) {
 
+            Intent i = new Intent(MainActivity.this, Kids.class);
+            startActivity(i);
+
         }
         else if (id == R.id.nav_jewellry) {
-
+            Intent i = new Intent(this, Jwellery.class);
+            startActivity(i);
         }
         else if (id == R.id.nav_sports) {
-
+            Intent i = new Intent(this, Sports.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

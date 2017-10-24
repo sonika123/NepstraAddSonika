@@ -9,8 +9,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorLightGreen">#18B49C</color>
     <color name="colorAppWhite">#DEDEDE</color>
-    <color name="colorAddToCartItemsBackground">#C72617</color>
-    <color name="colorAddToCartRedButton">#C72617</color>
-    <color name="colorAddToCartPairs">#DEDEDE</color>
-
+    <color name="colorAddToCartRedButton">#CC3B2D</color>
+    <color name="colorAddToCartItemsBackground">#EAE4E4</color>
+    <color name="colorAddToCartPairs">#E0E0E0</color>
 </resources>

@@ -23,11 +23,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sonika.nepstra.OrderedProducts;
+
 import com.sonika.nepstra.R;
 import com.sonika.nepstra.adapters.AllProductAdapter;
 import com.sonika.nepstra.helpers.MySharedPreference;
+import com.sonika.nepstra.helpers.OrderHelper;
 import com.sonika.nepstra.parser.JsonParserA;
 import com.sonika.nepstra.pojo.AllProducts;
+import com.sonika.nepstra.pojo.OrderedProducts_pojo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -300,7 +303,6 @@ public class All_products_fragment extends Fragment {
 
         if (id == R.id.action_shop)
         {
-
             Intent checkoutIntent = new Intent(getContext(), OrderedProducts.class);
             startActivity(checkoutIntent);
             return true;
@@ -310,15 +312,18 @@ public class All_products_fragment extends Fragment {
     }
     private Drawable buildCounterDrawable(int count, int backgroundImageId) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
+        List<OrderedProducts_pojo> cartProductsList1;
+        OrderHelper dbHelper = new OrderHelper(getContext());
         View view = inflater.inflate(R.layout.cart, null);
         view.setBackgroundResource(backgroundImageId);
-
+        cartProductsList1 = dbHelper.getOrderMessage();
+        Log.e("orderedsonika", String.valueOf(cartProductsList1.size()));
         if (count == 0) {
             View counterTextPanel = view.findViewById(R.id.counterValuePanel);
-            counterTextPanel.setVisibility(View.GONE);
+            counterTextPanel.setVisibility(View.VISIBLE);
         } else {
-            TextView textView = (TextView) view.findViewById(R.id.count);
-            textView.setText("" + count);
+            TextView counttv = view.findViewById(R.id.count);
+            counttv.setText(" " + count);
         }
 
         view.measure(

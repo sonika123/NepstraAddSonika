@@ -63,11 +63,11 @@ public class OrderAdapter extends BaseAdapter{
             row = inflater.inflate(resource, parent, false);
             holder = new ViewHolder();
 
-            holder.name = row.findViewById(R.id.ordered_productlist_name);
-            holder.price= row.findViewById(R.id.ordered_productlist_price);
-            holder.img_product = row.findViewById(R.id.ordered_productlist_image);
-            holder.orderid = row.findViewById(R.id.ordered_productlist_id);
-            holder.btnRemove = row.findViewById(R.id.btn_remove);
+            holder.name = row.findViewById(R.id.txt_name_add_to_cart);
+            holder.price= row.findViewById(R.id.txt_price_add_to_cart);
+            holder.img_product = row.findViewById(R.id.img_add_to_cart);
+            holder.orderid = row.findViewById(R.id.txt_pairs_add_to_cart);
+            holder.btnRemove = row.findViewById(R.id.btn_cancel_add_to_cart);
             row.setTag(holder);
         }
         else
@@ -84,7 +84,8 @@ public class OrderAdapter extends BaseAdapter{
         holder.name.setText("Name:"+" "+orderInfo.getOrderedname());
         holder.price.setText("Price:" + " "+orderInfo.getOrderedprice());
         Picasso.with(context).load(orderInfo.getOrderedimage()).into(holder.img_product);
-        holder.orderid.setText(position + 1 +" ");
+       holder.orderid.setText(position + 1 +" ");
+
         holder.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

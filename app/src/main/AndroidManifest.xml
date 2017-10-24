@@ -17,9 +17,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".DetailsActivity" />
-        <activity android:name=".OrderedProducts"></activity>
+        <activity android:name=".OrderedProducts" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".Navigations.Womens" />
+        <activity android:name=".Navigations.NewArrival" />
+        <activity android:name=".Navigations.ArtAndCraft" />
+        <activity android:name=".Navigations.Mens" />
+        <activity android:name=".Navigations.Jwellery" />
+        <activity android:name=".Navigations.Kids" />
+        <activity android:name=".Navigations.Sports" />
     </application>
 
 </manifest>

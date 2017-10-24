@@ -25,7 +25,7 @@
             />
         <item
             android:id="@+id/nav_books"
-            android:title="Books"
+            android:title="Kids"
             android:icon="@drawable/btn_books"
             />
         <item

@@ -42,13 +42,13 @@ public class NewArrivalsHelper extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
-    } public void insertwomen(ContentValues cv) {
+    } public void insertarrivals(ContentValues cv) {
         getWritableDatabase().insert("newarrival", "", cv);
         Log.e("insertvaeraxa", "yes");
 
     }
 
-    public ArrayList<Newarrivals_pojo> getwomen() {
+    public ArrayList<Newarrivals_pojo> getarrivals() {
         Log.e("getOrderMessage", "vaeraxa");
         String sql = "select * from newarrival";
         ArrayList<Newarrivals_pojo> list = new ArrayList<Newarrivals_pojo>();

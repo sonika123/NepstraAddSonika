@@ -3,6 +3,7 @@ package com.sonika.nepstra.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class MySharedPreference {
 
@@ -28,11 +29,14 @@ public class MySharedPreference {
     public void addProductCount(int productCount){
         SharedPreferences.Editor edits = prefs.edit();
         edits.putInt(Constants.PRODUCT_COUNT, productCount);
+
         edits.apply();
     }
 
     public int retrieveProductCount(){
+
        return prefs.getInt
                (Constants.PRODUCT_COUNT, 0);
+
     }
 }

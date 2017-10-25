@@ -45,6 +45,8 @@ public class All_products_fragment extends Fragment {
     RecyclerView mRecyclerView;
     List<AllProducts> allProductList = new ArrayList<AllProducts>();
     MySharedPreference sharedPreference;
+    OrderHelper orderHelper;
+    List<OrderedProducts_pojo> cartlist = new ArrayList<>();
 
 
     @Nullable
@@ -53,10 +55,12 @@ public class All_products_fragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_all_products, container, false);
         sharedPreference = new MySharedPreference(getContext());
+        orderHelper = new OrderHelper(getContext());
         setHasOptionsMenu(true);
         perform(v);
         return v;
     }
+
 
     private void perform(View v) {
         new AllProductsAsyncTask().execute();
@@ -274,12 +278,15 @@ public class All_products_fragment extends Fragment {
                 GridLayoutManager mGrid = new GridLayoutManager(getContext(), 2);
                 mRecyclerView.setLayoutManager(mGrid);
                 mRecyclerView.setHasFixedSize(true);
+
                 mRecyclerView.setNestedScrollingEnabled(false);
 
                 Log.e("rrrrrrrrrrrrr", String.valueOf(allProductList.size()));
 
                 AllProductAdapter HelloAdapter = new AllProductAdapter(getContext(), allProductList);
+
                 mRecyclerView.setAdapter(HelloAdapter);
+
 
 
             } else {
@@ -291,10 +298,18 @@ public class All_products_fragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         Log.e("menuvitra", "cart");
+
+
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem menuItem = menu.findItem(R.id.action_shop);
-        int mCount = sharedPreference.retrieveProductCount();
-        menuItem.setIcon(buildCounterDrawable(mCount, R.drawable.logo));
+        //int mCount = sharedPreference.retrieveProductCount();
+        //cartListener.showNumberOfRecords();
+        //int mCount = sharedPreference.retrieveProductCount();
+        cartlist = orderHelper.getOrderMessage();
+        
+        int mCount = cartlist.size();
+        Log.e("totalitems", String.valueOf(mCount));
+        menuItem.setIcon(buildCounterDrawable(mCount, R.drawable.cart));
     }
 
     @Override
@@ -312,17 +327,19 @@ public class All_products_fragment extends Fragment {
     }
     private Drawable buildCounterDrawable(int count, int backgroundImageId) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        List<OrderedProducts_pojo> cartProductsList1;
-        OrderHelper dbHelper = new OrderHelper(getContext());
         View view = inflater.inflate(R.layout.cart, null);
         view.setBackgroundResource(backgroundImageId);
-        cartProductsList1 = dbHelper.getOrderMessage();
-        Log.e("orderedsonika", String.valueOf(cartProductsList1.size()));
+
+
         if (count == 0) {
             View counterTextPanel = view.findViewById(R.id.counterValuePanel);
             counterTextPanel.setVisibility(View.VISIBLE);
+
+
         } else {
+
             TextView counttv = view.findViewById(R.id.count);
+
             counttv.setText(" " + count);
         }
 

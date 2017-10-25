@@ -12,9 +12,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import com.google.gson.GsonBuilder;
 import com.sonika.nepstra.DetailsActivity;
-import com.sonika.nepstra.OrderedProducts;
 import com.sonika.nepstra.R;
 import com.sonika.nepstra.helpers.ArtAndCraftHelper;
 import com.sonika.nepstra.helpers.JwelleryHelper;
@@ -29,7 +27,6 @@ import com.sonika.nepstra.pojo.OrderedProducts_pojo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,7 +41,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
     MySharedPreference sharedPreference;
     Gson gson;
 
-    String oname, oprice, oimage;
+    String oname, oprice, oimage, odesc;
     Integer cat_id;
     OrderHelper dbHelper;
     List<OrderedProducts_pojo> cartProductsList = new ArrayList<>();
@@ -54,6 +51,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
     MensHelper mensHelper;
     JwelleryHelper jwelleryHelper;
     SportsHelper sportsHelper;
+    MySharedPreference mySharedPreference;
     public AllProductAdapter(Context context, List<AllProducts> allproductList) {
         this.context = context;
         this.allProductList = allproductList;
@@ -76,11 +74,11 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
     }
 
     @Override
-    public void onBindViewHolder(AllProductHolder allholder, final int position) {
+    public void onBindViewHolder(final AllProductHolder allholder, final int position) {
         allholder.allproductName.setText(allProductList.get(position).getName());
         allholder.allproductPrice.setText("$" + allProductList.get(position).getPrice());
         Picasso.with(context).load(allProductList.get(position).getI_src()).into(allholder.allproductImage);
-      Log.e("chankhey", "monkey");
+        Log.e("chankhey", "monkey");
 
 
         allholder.viewMore.setOnClickListener(new View.OnClickListener() {
@@ -92,12 +90,11 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
                 context.startActivity(intent);
             }
         });
+
         assert allholder.addtocart != null;
         allholder.addtocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show();
 
                 oname = allProductList.get(position).getName();
@@ -108,6 +105,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
                 contentValues.put("name", oname);
                 contentValues.put("price", oprice);
                 contentValues.put("imageone", oimage);
+
 //                Log.e("pizza", "lovet");
 //                Log.e("momo", oname);
 //                Log.e("burger", oprice);
@@ -115,6 +113,11 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
                 dbHelper.insertOrderInfo(contentValues);
                 cartProductsList = dbHelper.getOrderMessage();
                 Log.e("orderedsonika", String.valueOf(cartProductsList.size()));
+
+//                mySharedPreference = new MySharedPreference(context);
+////
+//                mySharedPreference.addProductCount(cartProductsList.size());
+
             }
         });
 
@@ -122,6 +125,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
         oname = allProductList.get(position).getName();
         oprice = allProductList.get(position).getPrice();
         oimage = allProductList.get(position).getI_src();
+        odesc = allProductList.get(position).getDescription();
         cat_id = allProductList.get(position).getC_id();
 
         if (cat_id == 29) {
@@ -138,6 +142,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
             contentValues.put("name", oname);
             contentValues.put("price", oprice);
             contentValues.put("imageone", oimage);
+            contentValues.put("desc", odesc);
             arrivalsHelper.insertarrivals(contentValues);
         }
         if (cat_id == 30) {

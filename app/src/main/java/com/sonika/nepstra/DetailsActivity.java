@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.sonika.nepstra.helpers.MySharedPreference;
 import com.sonika.nepstra.helpers.OrderHelper;
 import com.sonika.nepstra.pojo.AllProducts;
+import com.sonika.nepstra.pojo.Newarrivals_pojo;
 import com.sonika.nepstra.pojo.OrderedProducts_pojo;
 
 import static org.jsoup.nodes.Document.OutputSettings.Syntax.html;
@@ -35,11 +36,11 @@ public class DetailsActivity extends AppCompatActivity {
          setContentView(R.layout.activity_details);
          dbHelper = new OrderHelper(DetailsActivity.this);
          sharedPreference = new MySharedPreference(DetailsActivity.this);
+
          GsonBuilder builder = new GsonBuilder();
          gson = builder.create();
 
          final AllProducts allProducts = (AllProducts) getIntent().getSerializableExtra("hello");
-
          imageview_details = (ImageView) findViewById(R.id.image);
          textView_name_details = (TextView) findViewById(R.id.txt_name);
          textView_desc_details = (TextView) findViewById(R.id.txt_desc);
@@ -47,16 +48,25 @@ public class DetailsActivity extends AppCompatActivity {
 
 
          Spanned withouthtml = stripHtml(allProducts.getDescription());
-         Log.e("test", String.valueOf(withouthtml));
+
+        // Log.e("test", String.valueOf(withouthtml));
 
          Glide.with(DetailsActivity.this).load(allProducts.getI_src()).into(imageview_details);
          textView_price_details.setText(allProducts.getPrice());
          textView_name_details.setText(allProducts.getName());
          textView_desc_details.setText(withouthtml);
 
+//         Spanned withouthtml1 = stripHtml(newarrivals_pojo.getNewdesc());
+//         Log.e("test", String.valueOf(withouthtml1));
+
+//         Glide.with(DetailsActivity.this).load(newarrivals_pojo.getNewimage()).into(imageview_details);
+//         textView_price_details.setText(newarrivals_pojo.getNewprice());
+//         textView_name_details.setText(newarrivals_pojo.getNewname());
+//         textView_desc_details.setText(withouthtml1);
+
 
      }
-         public Spanned stripHtml(String html) {
+          public Spanned stripHtml(String html) {
              if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                  return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
              } else {

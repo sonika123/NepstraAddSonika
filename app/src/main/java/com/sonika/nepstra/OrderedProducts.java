@@ -3,7 +3,6 @@ package com.sonika.nepstra;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,6 +39,7 @@ public class OrderedProducts extends AppCompatActivity implements ListViewListen
         show();
     }
 
+
     public void show() {
         orderedProductsList = dbhelper.getOrderMessage();
 
@@ -51,13 +51,13 @@ public class OrderedProducts extends AppCompatActivity implements ListViewListen
             lv.deferNotifyDataSetChanged();
         }
     }
-
     @Override
     public void getMyTotal() {
         String result = dbhelper.GetTotal();
-        totalAmount.setText("Your Toatl Bill Amount Is : " +result);
-
+        totalAmount.setText("Sub Total : " + result);
     }
+
+
 }
 //        orders_recyclerView = (RecyclerView) findViewById(R.id.or);
 //        //Toast.makeText(this, orderedProducts.getOrderedname(), Toast.LENGTH_SHORT).show();

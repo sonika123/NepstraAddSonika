@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/newArrival_product_image"
+            android:id="@+id/sports_product_image"
             android:layout_width="300dp"
             android:layout_height="200dp"
             android:adjustViewBounds="true"
@@ -32,7 +32,7 @@
             android:layout_marginTop="4dp"
             >
             <TextView
-                android:id="@+id/newArrival_product_name"
+                android:id="@+id/sports_product_name"
                 android:layout_width="0dp"
                 android:layout_weight="0.8"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 android:layout_weight="0.2"
                 android:layout_height="wrap_content"
                 android:text="$34"
-                android:id="@+id/newArrival_product_price"
+                android:id="@+id/sports_product_price"
                 android:textColor="@color/colorAppRed"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -75,7 +75,7 @@
             android:layout_height="40dp">
 
             <Button
-                android:id="@+id/newArrival_btn_add_to_cart"
+                android:id="@+id/sports_btn_add_to_cart"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
@@ -87,7 +87,7 @@
                 android:textColor="@color/colorWhite" />
 
             <Button
-                android:id="@+id/newArrival_btn_view_more"
+                android:id="@+id/sports_btn_view_more"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"

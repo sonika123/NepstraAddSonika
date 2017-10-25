@@ -34,7 +34,7 @@ public class MySharedPreference {
     }
 
     public int retrieveProductCount(){
-
+        Log.e("shared", String.valueOf(prefs.getInt(Constants.PRODUCT_COUNT, 0)));
        return prefs.getInt
                (Constants.PRODUCT_COUNT, 0);
 

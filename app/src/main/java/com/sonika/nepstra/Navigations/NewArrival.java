@@ -27,13 +27,12 @@ public class NewArrival extends AppCompatActivity {
         setContentView(R.layout.activity_new_arrival);
         dbhelper = new NewArrivalsHelper(this);
         lv = (ListView) findViewById(R.id.newArrival_productlist);
-        showWomenProducts();
+        showNewArrivals();
     }
 
-    private void showWomenProducts() {
+    private void showNewArrivals() {
         arrivalsPoductsList = dbhelper.getarrivals();
         for (int i = 0; i < arrivalsPoductsList.size(); i++)
-
         {
             final Newarrivals_pojo info = arrivalsPoductsList.get(i);
             arrivalAdapter = new NewArrivalAdapter(this, arrivalsPoductsList, R.layout.new_arrival_list);

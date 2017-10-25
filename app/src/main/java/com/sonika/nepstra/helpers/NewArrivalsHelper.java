@@ -25,6 +25,7 @@ public class NewArrivalsHelper extends SQLiteOpenHelper{
             "                       `c_id` INTEGER,\n" +
             "                       `name` TEXT,\n" +
             "                       `price` TEXT,\n" +
+            "                       `desc` TEXT,\n" +
             "                       `imageone` TEXT\n" +
             "                      );";
 
@@ -61,6 +62,7 @@ public class NewArrivalsHelper extends SQLiteOpenHelper{
             arrivals.newcid = cursor.getInt(cursor.getColumnIndex("c_id"));
             arrivals.newname = cursor.getString(cursor.getColumnIndex("name"));
             arrivals.newprice = cursor.getString(cursor.getColumnIndex("price"));
+            arrivals.newdesc = cursor.getString(cursor.getColumnIndex("desc"));
             arrivals.newimage = cursor.getString(cursor.getColumnIndex("imageone"));
             list.add(arrivals);
         }

@@ -1,21 +1,24 @@
 package com.sonika.nepstra.pojo;
 
+import java.io.Serializable;
+
 /**
  * Created by sonika on 10/16/2017.
  */
 
-public class Newarrivals_pojo {
-    public String newname, newprice, newimage;
+public class Newarrivals_pojo implements Serializable {
+    public String newname, newprice, newimage, newdesc;
     public Integer newid;
     public Integer newcid;
 
     public Newarrivals_pojo() {
     }
 
-    public Newarrivals_pojo(String newname, String newprice, String newimage, Integer newid, Integer newcid) {
+    public Newarrivals_pojo(String newname, String newprice, String newimage, String newdesc, Integer newid, Integer newcid) {
         this.newname = newname;
         this.newprice = newprice;
         this.newimage = newimage;
+        this.newdesc = newdesc;
         this.newid = newid;
         this.newcid = newcid;
     }
@@ -42,6 +45,14 @@ public class Newarrivals_pojo {
 
     public void setNewimage(String newimage) {
         this.newimage = newimage;
+    }
+
+    public String getNewdesc() {
+        return newdesc;
+    }
+
+    public void setNewdesc(String newdesc) {
+        this.newdesc = newdesc;
     }
 
     public Integer getNewid() {

@@ -66,8 +66,8 @@ public class OrderAdapter extends BaseAdapter{
             holder.name = row.findViewById(R.id.txt_name_add_to_cart);
             holder.price= row.findViewById(R.id.txt_price_add_to_cart);
             holder.img_product = row.findViewById(R.id.img_add_to_cart);
-            holder.orderid = row.findViewById(R.id.txt_pairs_add_to_cart);
-            holder.btnRemove = row.findViewById(R.id.btn_cancel_add_to_cart);
+            holder.orderid = row.findViewById(R.id.ordered_productlist_id);
+            holder.btnRemove = row.findViewById(R.id.btn_add_to_cart_remove);
             row.setTag(holder);
         }
         else

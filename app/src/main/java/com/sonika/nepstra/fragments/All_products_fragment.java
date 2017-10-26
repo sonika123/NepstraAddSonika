@@ -298,24 +298,21 @@ public class All_products_fragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         Log.e("menuvitra", "cart");
-
-
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem menuItem = menu.findItem(R.id.action_shop);
         //int mCount = sharedPreference.retrieveProductCount();
         //cartListener.showNumberOfRecords();
         //int mCount = sharedPreference.retrieveProductCount();
         cartlist = orderHelper.getOrderMessage();
-        
+
         int mCount = cartlist.size();
         Log.e("totalitems", String.valueOf(mCount));
+        getActivity().invalidateOptionsMenu();
         menuItem.setIcon(buildCounterDrawable(mCount, R.drawable.cart));
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final int id = item.getItemId();
-
         if (id == R.id.action_shop)
         {
             Intent checkoutIntent = new Intent(getContext(), OrderedProducts.class);
@@ -355,4 +352,5 @@ public class All_products_fragment extends Fragment {
 
         return new BitmapDrawable(getResources(), bitmap);
     }
+
 }

@@ -40,7 +40,6 @@ public class NewArrivalAdapter extends BaseAdapter{
     NewArrivalsHelper dbHelper;
     OrderHelper orderHelper;
     String cname, cimage, cprice, cdesc;
-    MySharedPreference sharedPreference;
 
     public NewArrivalAdapter(Context context, List<Newarrivals_pojo> newarrivals_pojos, int resource) {
         this.context = context;
@@ -87,7 +86,6 @@ public class NewArrivalAdapter extends BaseAdapter{
         final Newarrivals_pojo orderInfo = newarrivals_pojos.get(i);
         orderHelper =  new OrderHelper(context);
         dbHelper = new NewArrivalsHelper(context);
-        sharedPreference = new MySharedPreference(context);
 
         //holder.orderid.setText(orderInfo.getOrderid().toString());
 

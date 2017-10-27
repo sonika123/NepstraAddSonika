@@ -12,16 +12,16 @@
         android:id="@+id/totalamount"
         android:layout_weight="2"
         android:layout_width="wrap_content"
-        android:layout_height="17dp"
+        android:layout_height="wrap_content"
         android:text="Sub Total"
         android:textSize="16sp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/ordered_productlist"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/ordered_productlist"
+        app:layout_constraintRight_toRightOf="@+id/ordered_productlist"
         android:layout_marginLeft="8dp"
-        app:layout_constraintTop_toTopOf="@+id/ordered_productlist"
-        android:layout_marginTop="160dp"
+        app:layout_constraintLeft_toLeftOf="@+id/ordered_productlist"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
@@ -38,7 +38,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:textStyle="bold"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/totalamount"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
@@ -48,13 +48,15 @@
     <ListView
         android:id="@+id/ordered_productlist"
         android:layout_width="540dp"
-        android:layout_height="511dp"
+        android:layout_height="360dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="50dp"
         android:layout_weight="6"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="8dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

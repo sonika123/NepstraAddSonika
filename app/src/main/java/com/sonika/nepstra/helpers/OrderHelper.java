@@ -58,6 +58,7 @@ public class OrderHelper extends SQLiteOpenHelper {
             OrderedProducts_pojo orderinfo = new OrderedProducts_pojo();
             orderinfo.orderid = cursor.getInt(cursor.getColumnIndex("id"));
             orderinfo.orderedname = cursor.getString(cursor.getColumnIndex("name"));
+            orderinfo.orderedcat_id = cursor.getString(cursor.getColumnIndex("cat_id"));
             orderinfo.orderedprice = cursor.getString(cursor.getColumnIndex("price"));
             orderinfo.orderedimage = cursor.getString(cursor.getColumnIndex("imageone"));
             list.add(orderinfo);

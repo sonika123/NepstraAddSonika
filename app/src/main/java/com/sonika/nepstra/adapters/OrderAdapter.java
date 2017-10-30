@@ -2,6 +2,7 @@ package com.sonika.nepstra.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,8 +85,10 @@ public class OrderAdapter extends BaseAdapter{
         holder.name.setText("Name:"+" "+orderInfo.getOrderedname());
         holder.price.setText("Price:" + " "+orderInfo.getOrderedprice());
         Picasso.with(context).load(orderInfo.getOrderedimage()).into(holder.img_product);
-        //holder.orderid.setText(position + 1 +" ");
-        holder.orderid.setText("id: " +orderInfo.getOrderid());
+        holder.orderid.setText(position + 1 +" ");
+        Log.e("catid", orderInfo.getOrderedcat_id());
+
+
 
         holder.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +111,7 @@ public class OrderAdapter extends BaseAdapter{
 
 
     static class ViewHolder {
-        TextView name, price, orderid;
+        TextView name, price, orderid, catid;
         Button btnRemove;
         ImageView img_product;
     }

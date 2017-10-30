@@ -111,6 +111,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
                 oname = allProductList.get(position).getName();
                 oprice = allProductList.get(position).getPrice();
                 oimage = allProductList.get(position).getI_src();
+                cat_id = allProductList.get(position).getC_id();
 
                 //odesc = allProductList.get(position).getDescription();
 
@@ -118,6 +119,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
                 contentValues.put("name", oname);
                 contentValues.put("price", oprice);
                 contentValues.put("imageone", oimage);
+                contentValues.put("cat_id", cat_id);
                 // contentValues.put("desc", odesc);
 
 //                Log.e("pizza", "lovet");

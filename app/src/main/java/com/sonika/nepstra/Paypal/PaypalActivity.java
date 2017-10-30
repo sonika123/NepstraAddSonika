@@ -2,6 +2,7 @@ package com.sonika.nepstra.Paypal;
 
 import android.app.Activity;
 import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -30,7 +31,7 @@ public class PaypalActivity extends AppCompatActivity implements View.OnClickLis
 
     //The views
     private Button buttonPay;
-    private EditText editTextAmount;
+  //  private EditText editTextAmount;
 
     //Payment Amount
     private String paymentAmount;
@@ -74,21 +75,21 @@ public class PaypalActivity extends AppCompatActivity implements View.OnClickLis
     private void getPayment() {
 
         //Getting the amount from editText
-        paymentAmount = editTextAmount.getText().toString();
-
-        //Creating a paypalpayment
-
-        if (paymentAmount.equals("")) {
-
-            Toast.makeText(getApplicationContext(), "Field Vaccant",
-                    Toast.LENGTH_LONG).show();
-
-        } else if (paymentAmount.equals(0)) {
-            Toast.makeText(getApplicationContext(), "Amount is 0", Toast.LENGTH_SHORT).show();
-
-        } else {
-            PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(paymentAmount)), "USD", "Total cost:",
-                    PayPalPayment.PAYMENT_INTENT_SALE);
+//        paymentAmount = editTextAmount.getText().toString();
+//
+//        //Creating a paypalpayment
+//
+//        if (paymentAmount.equals("")) {
+//
+//            Toast.makeText(getApplicationContext(), "Field Vaccant",
+//                    Toast.LENGTH_LONG).show();
+//
+//        } else if (paymentAmount.equals(0)) {
+//            Toast.makeText(getApplicationContext(), "Amount is 0", Toast.LENGTH_SHORT).show();
+//
+//        } else {
+         PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf("1")), "USD", "Total cost:",
+                 PayPalPayment.PAYMENT_INTENT_SALE);
 
             //Creating Paypal Payment activity intent
             Intent intent = new Intent(this, PaymentActivity.class);
@@ -97,13 +98,13 @@ public class PaypalActivity extends AppCompatActivity implements View.OnClickLis
             intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
 
             //Puting paypal payment to the intent
-            intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+            intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment );
 
             //Starting the intent activity for result
             //the request code will be used on the method onActivityResult
             startActivityForResult(intent, PAYPAL_REQUEST_CODE);
         }
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

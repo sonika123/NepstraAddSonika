@@ -14,16 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sonika.nepstra.DetailsActivity;
-import com.sonika.nepstra.Navigations.NewArrival;
 import com.sonika.nepstra.R;
-import com.sonika.nepstra.helpers.MySharedPreference;
+import com.sonika.nepstra.helpers.DetailsHelper;
 import com.sonika.nepstra.helpers.NewArrivalsHelper;
 import com.sonika.nepstra.helpers.OrderHelper;
-import com.sonika.nepstra.helpers.WomenHelper;
-import com.sonika.nepstra.pojo.AllProducts;
-import com.sonika.nepstra.pojo.Jwellery_pojo;
 import com.sonika.nepstra.pojo.Newarrivals_pojo;
-import com.sonika.nepstra.pojo.WomenPoducts_pojo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -39,6 +34,7 @@ public class NewArrivalAdapter extends BaseAdapter{
     int resource;
     NewArrivalsHelper dbHelper;
     OrderHelper orderHelper;
+    DetailsHelper detailsHelper;
     String cname, cimage, cprice, cdesc;
 
     public NewArrivalAdapter(Context context, List<Newarrivals_pojo> newarrivals_pojos, int resource) {
@@ -86,6 +82,7 @@ public class NewArrivalAdapter extends BaseAdapter{
         final Newarrivals_pojo orderInfo = newarrivals_pojos.get(i);
         orderHelper =  new OrderHelper(context);
         dbHelper = new NewArrivalsHelper(context);
+        detailsHelper = new DetailsHelper(context);
 
         //holder.orderid.setText(orderInfo.getOrderid().toString());
 
@@ -94,28 +91,39 @@ public class NewArrivalAdapter extends BaseAdapter{
         holder.newprice.setText("Price:" + " "+orderInfo.getNewprice());
         Picasso.with(context).load(orderInfo.getNewimage()).into(holder.newimg_product);
 
-        cname = newarrivals_pojos.get(i).getNewname();
-        cimage = newarrivals_pojos.get(i).getNewimage();
-        cprice = newarrivals_pojos.get(i).getNewprice();
+
         holder.view_more_arrival.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "view more", Toast.LENGTH_SHORT).show();
-
+                cname = newarrivals_pojos.get(i).getNewname();
+                cimage = newarrivals_pojos.get(i).getNewimage();
+                cprice = newarrivals_pojos.get(i).getNewprice();
+                cdesc = newarrivals_pojos.get(i).getNewdesc();
+                ContentValues cvdetails = new ContentValues();
+                cvdetails.put("name", cname);
+                cvdetails.put("price", cprice);
+                cvdetails.put("imageone", cimage);
+                cvdetails.put("desc" , cdesc);
+                detailsHelper.insertdetails(cvdetails);
                 Intent intent = new Intent(context , DetailsActivity.class);
+
                 context.startActivity(intent);
-
-
             }
         });
 
         holder.add_to_cart_arrival.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cname = newarrivals_pojos.get(i).getNewname();
+                cimage = newarrivals_pojos.get(i).getNewimage();
+                cprice = newarrivals_pojos.get(i).getNewprice();
+                //cdesc = newarrivals_pojos.get(i).getNewdesc();
                 ContentValues cv = new ContentValues();
                 cv.put("name", cname);
                 cv.put("price", cprice);
                 cv.put("imageone", cimage);
+                // cv.put("desc" , cdesc);
                 orderHelper.insertOrderInfo(cv);
                 Toast.makeText(context, "added to cart", Toast.LENGTH_SHORT).show();
             }
@@ -129,5 +137,5 @@ public class NewArrivalAdapter extends BaseAdapter{
         Button add_to_cart_arrival, view_more_arrival;
         ImageView newimg_product;
     }
-    }
+}
 

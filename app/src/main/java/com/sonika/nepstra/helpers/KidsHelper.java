@@ -26,6 +26,7 @@ public class KidsHelper extends SQLiteOpenHelper {
             "                       `name` TEXT,\n" +
             "                       `price` TEXT,\n" +
             "                       `imageone` TEXT\n" +
+            "                       `desc` TEXT\n" +
             "                      );";
 
     public KidsHelper(Context context) {
@@ -63,6 +64,7 @@ public class KidsHelper extends SQLiteOpenHelper {
             orderinfo.kidsname= cursor.getString(cursor.getColumnIndex("name"));
             orderinfo.kidsprice = cursor.getString(cursor.getColumnIndex("price"));
             orderinfo.kidsimage = cursor.getString(cursor.getColumnIndex("imageone"));
+            orderinfo.kidsdesc = cursor.getString(cursor.getColumnIndex("desc"));
             list.add(orderinfo);
         }
         cursor.close();

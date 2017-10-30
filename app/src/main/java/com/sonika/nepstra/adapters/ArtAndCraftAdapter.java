@@ -3,6 +3,8 @@ package com.sonika.nepstra.adapters;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sonika.nepstra.DetailsActivity;
 import com.sonika.nepstra.Navigations.ArtAndCraft;
 import com.sonika.nepstra.R;
 import com.sonika.nepstra.helpers.ArtAndCraftHelper;
+import com.sonika.nepstra.helpers.DetailsHelper;
 import com.sonika.nepstra.helpers.NewArrivalsHelper;
 import com.sonika.nepstra.helpers.OrderHelper;
 import com.sonika.nepstra.pojo.ArtAndCraft_pojo;
@@ -33,8 +37,9 @@ public class ArtAndCraftAdapter extends BaseAdapter {
     List<ArtAndCraft_pojo> artAndCraft_pojos = new ArrayList<ArtAndCraft_pojo>();
     int resource;
     ArtAndCraftHelper dbHelper;
+    DetailsHelper detailsHelper;
     OrderHelper orderHelper;
-    String cname, cprice, cimage;
+    String aname, aprice, aimage, adesc;
     public ArtAndCraftAdapter(Context context, List<ArtAndCraft_pojo> artAndCraft_pojos, int resource) {
         this.context = context;
         this.artAndCraft_pojos = artAndCraft_pojos;
@@ -58,7 +63,7 @@ public class ArtAndCraftAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         View row = view;
         ViewHolder holder = null;
         if(row == null)
@@ -83,6 +88,7 @@ public class ArtAndCraftAdapter extends BaseAdapter {
 
         dbHelper = new ArtAndCraftHelper(context);
         orderHelper = new OrderHelper(context);
+        detailsHelper = new DetailsHelper(context);
         //holder.orderid.setText(orderInfo.getOrderid().toString());
 
 
@@ -90,17 +96,40 @@ public class ArtAndCraftAdapter extends BaseAdapter {
         holder.artprice.setText("Price:" + " "+orderInfo.getArtprice());
         Picasso.with(context).load(orderInfo.getArtimage()).into(holder.artimg_product);
 
-        cname = artAndCraft_pojos.get(i).getArtname();
-        cimage = artAndCraft_pojos.get(i).getArtimage();
-        cprice = artAndCraft_pojos.get(i).getArtprice();
+
+
+        holder.btn_art_view_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "view more", Toast.LENGTH_SHORT).show();
+                aname = artAndCraft_pojos.get(i).getArtname();
+                aimage = artAndCraft_pojos.get(i).getArtimage();
+                aprice = artAndCraft_pojos.get(i).getArtprice();
+                adesc = artAndCraft_pojos.get(i).getArtdesc();
+                ContentValues cv1 = new ContentValues();
+                cv1.put("name", aname);
+                cv1.put("price", aprice);
+                cv1.put("imageone", aimage);
+                cv1.put("desc" , adesc);
+                detailsHelper.insertdetails(cv1);
+
+                Intent intent = new Intent(context , DetailsActivity.class);
+                context.startActivity(intent);
+
+            }
+        });
 
         holder.btn_art_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                aname = artAndCraft_pojos.get(i).getArtname();
+                aimage = artAndCraft_pojos.get(i).getArtimage();
+                aprice = artAndCraft_pojos.get(i).getArtprice();
+                adesc = artAndCraft_pojos.get(i).getArtdesc();
                 ContentValues cv = new ContentValues();
-                cv.put("name", cname);
-                cv.put("price", cprice);
-                cv.put("imageone", cimage);
+                cv.put("name", aname);
+                cv.put("price", aprice);
+                cv.put("imageone", aimage);
                 orderHelper.insertOrderInfo(cv);
                 Toast.makeText(context, "added to cart", Toast.LENGTH_SHORT).show();
             }
@@ -113,4 +142,4 @@ public class ArtAndCraftAdapter extends BaseAdapter {
         Button btn_art_add_to_cart, btn_art_view_more;
         ImageView artimg_product;
     }
-    }
+}

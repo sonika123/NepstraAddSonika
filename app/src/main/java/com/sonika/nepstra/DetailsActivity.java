@@ -5,75 +5,78 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.sonika.nepstra.helpers.MySharedPreference;
+import com.sonika.nepstra.helpers.DetailsHelper;
 import com.sonika.nepstra.helpers.OrderHelper;
 import com.sonika.nepstra.pojo.AllProducts;
-import com.sonika.nepstra.pojo.Newarrivals_pojo;
-import com.sonika.nepstra.pojo.OrderedProducts_pojo;
+import com.sonika.nepstra.pojo.Details_pojo;
 
-import static org.jsoup.nodes.Document.OutputSettings.Syntax.html;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DetailsActivity extends AppCompatActivity {
     ImageView imageview_details;
-    Button addToCart;
+
     TextView textView_name_details, textView_desc_details, textView_price_details;
-    private MySharedPreference sharedPreference;
-    Gson gson;
-    OrderedProducts_pojo pojo;
-    private int cartProductNumber = 0;
-    OrderHelper dbHelper;
-     @Override
+    List<Details_pojo> detailsPojoList  = new ArrayList<>();;
+    //    AllProducts allProducts;
+//    OrderHelper dbHelper;
+    DetailsHelper detailsHelper;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
-         super.onCreate(savedInstanceState);
-         setContentView(R.layout.activity_details);
-         dbHelper = new OrderHelper(DetailsActivity.this);
-         sharedPreference = new MySharedPreference(DetailsActivity.this);
-
-         GsonBuilder builder = new GsonBuilder();
-         gson = builder.create();
-
-         final AllProducts allProducts = (AllProducts) getIntent().getSerializableExtra("hello");
-         imageview_details = (ImageView) findViewById(R.id.image);
-         textView_name_details = (TextView) findViewById(R.id.txt_name);
-         textView_desc_details = (TextView) findViewById(R.id.txt_desc);
-         textView_price_details = (TextView) findViewById(R.id.txt_price);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_details);
+//         dbHelper = new OrderHelper(DetailsActivity.this);
+        detailsHelper = new DetailsHelper(this);
 
 
-         Spanned withouthtml = stripHtml(allProducts.getDescription());
+//        allProducts = (AllProducts) getIntent().getSerializableExtra("hello");
 
-        // Log.e("test", String.valueOf(withouthtml));
+        imageview_details = (ImageView) findViewById(R.id.image);
+        textView_name_details = (TextView) findViewById(R.id.txt_name);
+        textView_desc_details = (TextView) findViewById(R.id.txt_desc);
+        textView_price_details = (TextView) findViewById(R.id.txt_price);
 
-         Glide.with(DetailsActivity.this).load(allProducts.getI_src()).into(imageview_details);
-         textView_price_details.setText(allProducts.getPrice());
-         textView_name_details.setText(allProducts.getName());
-         textView_desc_details.setText(withouthtml);
+        show();
+//         Spanned withouthtml = stripHtml(allProducts.getDescription());
+//
+//             // Log.e("test", String.valueOf(withouthtml));
+//
+//         Glide.with(DetailsActivity.this).load(allProducts.getI_src()).into(imageview_details);
+//         textView_price_details.setText(allProducts.getPrice());
+//         textView_name_details.setText(allProducts.getName());
+//         textView_desc_details.setText(withouthtml);
 
-//         Spanned withouthtml1 = stripHtml(newarrivals_pojo.getNewdesc());
-//         Log.e("test", String.valueOf(withouthtml1));
+    }
 
-//         Glide.with(DetailsActivity.this).load(newarrivals_pojo.getNewimage()).into(imageview_details);
-//         textView_price_details.setText(newarrivals_pojo.getNewprice());
-//         textView_name_details.setText(newarrivals_pojo.getNewname());
-//         textView_desc_details.setText(withouthtml1);
+    private void show() {
+        detailsPojoList = detailsHelper.getdetails();
 
+        for (int i = 0; i < detailsPojoList.size(); i++) {
+            Spanned withouthtml = stripHtml(detailsPojoList.get(i).detailsdesc);
+            Log.e("test", String.valueOf(withouthtml));
 
-     }
-          public Spanned stripHtml(String html) {
-             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                 return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
-             } else {
-                 return Html.fromHtml(html);
+            Glide.with(DetailsActivity.this).load(detailsPojoList.get(i).detailsimage).into(imageview_details);
+            textView_price_details.setText(detailsPojoList.get(i).detailsprice);
+            textView_name_details.setText(detailsPojoList.get(i).detailsname);
+            textView_desc_details.setText(withouthtml);
 
-             }
-         }
+        }
+    }
+
+    public Spanned stripHtml(String html) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            return Html.fromHtml(html);
+
+        }
+    }
 
 
 
@@ -168,4 +171,4 @@ public class DetailsActivity extends AppCompatActivity {
 }
 
 */
-    }
+}

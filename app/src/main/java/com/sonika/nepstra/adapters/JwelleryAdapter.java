@@ -3,6 +3,7 @@ package com.sonika.nepstra.adapters;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sonika.nepstra.DetailsActivity;
 import com.sonika.nepstra.Navigations.Jwellery;
 import com.sonika.nepstra.R;
 import com.sonika.nepstra.helpers.ArtAndCraftHelper;
+import com.sonika.nepstra.helpers.DetailsHelper;
 import com.sonika.nepstra.helpers.JwelleryHelper;
 import com.sonika.nepstra.helpers.OrderHelper;
 import com.sonika.nepstra.pojo.ArtAndCraft_pojo;
@@ -34,9 +37,10 @@ public class JwelleryAdapter extends BaseAdapter{
     Context context;
     List<Jwellery_pojo> jwellery_pojoList = new ArrayList<Jwellery_pojo>();
     int resource;
-   JwelleryHelper dbHelper;
+    JwelleryHelper dbHelper;
     OrderHelper orderHelper;
-    String cname, cprice, cimage;
+    DetailsHelper detailsHelper;
+    String cname, cprice, cimage,cdesc;
     public JwelleryAdapter(Context context, List<Jwellery_pojo> jwellery_pojoList, int resource) {
         this.context = context;
         this.jwellery_pojoList = jwellery_pojoList;
@@ -59,7 +63,7 @@ public class JwelleryAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         View row = view;
         ViewHolder holder = null;
         if(row == null)
@@ -84,6 +88,7 @@ public class JwelleryAdapter extends BaseAdapter{
 
         dbHelper = new JwelleryHelper(context);
         orderHelper = new OrderHelper(context);
+        detailsHelper = new DetailsHelper(context);
 
         //holder.orderid.setText(orderInfo.getOrderid().toString());
 
@@ -91,13 +96,35 @@ public class JwelleryAdapter extends BaseAdapter{
         holder.jwelleryname.setText("Name:"+" "+orderInfo.getJwelleryname());
         holder.jwelleryprice.setText("Price:" + " "+orderInfo.getJwelleryprice());
         Picasso.with(context).load(orderInfo.getJwelleryimage()).into(holder.jwelleryimg_product);
-        cname = jwellery_pojoList.get(i).getJwelleryname();
-        cimage = jwellery_pojoList.get(i).getJwelleryimage();
-        cprice = jwellery_pojoList.get(i).getJwelleryprice();
+
+
+        holder.btn_jwellery_view_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "view more", Toast.LENGTH_SHORT).show();
+                cname = jwellery_pojoList.get(i).getJwelleryname();
+                cimage = jwellery_pojoList.get(i).getJwelleryimage();
+                cprice = jwellery_pojoList.get(i).getJwelleryprice();
+                cdesc = jwellery_pojoList.get(i).getJwellerydesc();
+                ContentValues cv1 = new ContentValues();
+                cv1.put("name", cname);
+                cv1.put("price", cprice);
+                cv1.put("imageone", cimage);
+                cv1.put("desc" , cdesc);
+                detailsHelper.insertdetails(cv1);
+
+                Intent intent = new Intent(context , DetailsActivity.class);
+                context.startActivity(intent);
+
+            }
+        });
 
         holder.btn_jwellery_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cname = jwellery_pojoList.get(i).getJwelleryname();
+                cimage = jwellery_pojoList.get(i).getJwelleryimage();
+                cprice = jwellery_pojoList.get(i).getJwelleryprice();
                 ContentValues cv = new ContentValues();
                 cv.put("name", cname);
                 cv.put("price", cprice);

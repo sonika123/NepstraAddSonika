@@ -26,6 +26,7 @@ public class ArtAndCraftHelper extends SQLiteOpenHelper {
             "                       `c_id` INTEGER,\n" +
             "                       `name` TEXT,\n" +
             "                       `price` TEXT,\n" +
+            "                       `desc` TEXT,\n" +
             "                       `imageone` TEXT\n" +
             "                      );";
 
@@ -63,6 +64,7 @@ public class ArtAndCraftHelper extends SQLiteOpenHelper {
             orderinfo.artcid = cursor.getInt(cursor.getColumnIndex("c_id"));
             orderinfo.artname = cursor.getString(cursor.getColumnIndex("name"));
             orderinfo.artprice = cursor.getString(cursor.getColumnIndex("price"));
+            orderinfo.artdesc = cursor.getString(cursor.getColumnIndex("desc"));
             orderinfo.artimage = cursor.getString(cursor.getColumnIndex("imageone"));
             list.add(orderinfo);
         }

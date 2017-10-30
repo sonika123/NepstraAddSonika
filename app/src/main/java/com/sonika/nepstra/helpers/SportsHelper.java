@@ -25,6 +25,7 @@ public class SportsHelper extends SQLiteOpenHelper {
             "                       `c_id` INTEGER,\n" +
             "                       `name` TEXT,\n" +
             "                       `price` TEXT,\n" +
+            "                       `desc` TEXT,\n" +
             "                       `imageone` TEXT\n" +
             "                      );";
 
@@ -62,6 +63,7 @@ public class SportsHelper extends SQLiteOpenHelper {
             sports.sportsname = cursor.getString(cursor.getColumnIndex("name"));
             sports.sportsprice = cursor.getString(cursor.getColumnIndex("price"));
             sports.sportsimage = cursor.getString(cursor.getColumnIndex("imageone"));
+            sports.sportsdesc = cursor.getString(cursor.getColumnIndex("desc"));
             list.add(sports);
         }
         cursor.close();

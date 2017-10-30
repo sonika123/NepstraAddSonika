@@ -6,17 +6,18 @@ package com.sonika.nepstra.pojo;
 
 public class Sports_pojo {
 
-    public String sportsname, sportsprice, sportsimage;
+    public String sportsname, sportsprice, sportsimage, sportsdesc;
     public Integer sportsid;
     public Integer sportscid;
 
     public Sports_pojo() {
     }
 
-    public Sports_pojo(String sportsname, String sportsprice, String sportsimage, Integer sportsid, Integer sportscid) {
+    public Sports_pojo(String sportsname, String sportsprice, String sportsimage, String sportsdesc, Integer sportsid, Integer sportscid) {
         this.sportsname = sportsname;
         this.sportsprice = sportsprice;
         this.sportsimage = sportsimage;
+        this.sportsdesc = sportsdesc;
         this.sportsid = sportsid;
         this.sportscid = sportscid;
     }
@@ -43,6 +44,14 @@ public class Sports_pojo {
 
     public void setSportsimage(String sportsimage) {
         this.sportsimage = sportsimage;
+    }
+
+    public String getSportsdesc() {
+        return sportsdesc;
+    }
+
+    public void setSportsdesc(String sportsdesc) {
+        this.sportsdesc = sportsdesc;
     }
 
     public Integer getSportsid() {

@@ -3,6 +3,7 @@ package com.sonika.nepstra.adapters;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sonika.nepstra.DetailsActivity;
 import com.sonika.nepstra.R;
+import com.sonika.nepstra.helpers.DetailsHelper;
 import com.sonika.nepstra.helpers.JwelleryHelper;
 import com.sonika.nepstra.helpers.OrderHelper;
 import com.sonika.nepstra.helpers.SportsHelper;
@@ -33,7 +36,8 @@ public class SportsAdapter extends BaseAdapter{
     int resource;
     SportsHelper dbHelper;
     OrderHelper orderHelper;
-    String cname, cimage, cprice;
+    DetailsHelper detailsHelper;
+    String cname, cimage, cprice, cdesc;
 
     public SportsAdapter(Context context, List<Sports_pojo> sports_pojoList, int resource) {
         this.context = context;
@@ -57,7 +61,7 @@ public class SportsAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         View row = view;
         ViewHolder holder = null;
         if(row == null)
@@ -82,6 +86,7 @@ public class SportsAdapter extends BaseAdapter{
 
         dbHelper = new SportsHelper(context);
         orderHelper = new OrderHelper(context);
+        detailsHelper = new DetailsHelper(context);
         //holder.orderid.setText(orderInfo.getOrderid().toString());
 
 
@@ -89,12 +94,32 @@ public class SportsAdapter extends BaseAdapter{
         holder.sportsprice.setText("Price:" + " "+sportsinfo.getSportsprice());
         Picasso.with(context).load(sportsinfo.getSportsimage()).into(holder.sportsimg_product);
 
-        cname = sports_pojoList.get(i).getSportsname();
-        cimage = sports_pojoList.get(i).getSportsimage();
-        cprice =sports_pojoList.get(i).getSportsprice();
+        holder.btn_sport_view_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "view more", Toast.LENGTH_SHORT).show();
+                cname = sports_pojoList.get(i).getSportsname();
+                cimage = sports_pojoList.get(i).getSportsimage();
+                cprice = sports_pojoList.get(i).getSportsprice();
+                cdesc = sports_pojoList.get(i).getSportsdesc();
+                ContentValues cvdetails = new ContentValues();
+                cvdetails.put("name", cname);
+                cvdetails.put("price", cprice);
+                cvdetails.put("imageone", cimage);
+                cvdetails.put("desc" , cdesc);
+                detailsHelper.insertdetails(cvdetails);
+                Intent intent = new Intent(context , DetailsActivity.class);
+
+                context.startActivity(intent);
+            }
+        });
+
         holder.btn_sport_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cname = sports_pojoList.get(i).getSportsname();
+                cimage = sports_pojoList.get(i).getSportsimage();
+                cprice =sports_pojoList.get(i).getSportsprice();
                 ContentValues cv = new ContentValues();
                 cv.put("name", cname);
                 cv.put("price", cprice);

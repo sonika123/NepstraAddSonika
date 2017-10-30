@@ -7,20 +7,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.sonika.nepstra.pojo.Jwellery_pojo;
-import com.sonika.nepstra.pojo.Mens_pojo;
+import com.sonika.nepstra.pojo.Details_pojo;
 
 import java.util.ArrayList;
 
 /**
- * Created by sonika on 10/17/2017.
+ * Created by sonika on 10/26/2017.
  */
 
-public class JwelleryHelper extends SQLiteOpenHelper {
+public class DetailsHelper extends SQLiteOpenHelper {
     static int DATABASE_VERSION = 1;
-    static String DATABASE_NAME = "jwellery";
+    static String DATABASE_NAME = "details";
 
-    String Jwellery_TABLE = "CREATE TABLE if not exists `jwellery`  (\n" +
+    String DETAILS_TABLE = "CREATE TABLE if not exists `details`  (\n" +
             "                       `id` INTEGER PRIMARY KEY ,\n" +
             "                       `c_id` INTEGER,\n" +
             "                       `name` TEXT,\n" +
@@ -29,9 +28,9 @@ public class JwelleryHelper extends SQLiteOpenHelper {
             "                       `imageone` TEXT\n" +
             "                      );";
 
-    public JwelleryHelper(Context context) {
+    public DetailsHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        getWritableDatabase().execSQL(Jwellery_TABLE);
+        getWritableDatabase().execSQL(DETAILS_TABLE);
     }
 
     @Override
@@ -44,27 +43,27 @@ public class JwelleryHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
-    public void insertjwellery(ContentValues cv) {
-        getWritableDatabase().insert("jwellery", "", cv);
-        Log.e("poker", "yes");
+    public void insertdetails(ContentValues cv) {
+        getWritableDatabase().insert("details", "", cv);
+        Log.e("details", "yes");
 
     }
 
-    public ArrayList<Jwellery_pojo> getjwellery() {
+    public ArrayList<Details_pojo> getdetails() {
         Log.e("getOrderMessage", "vaeraxa");
-        String sql = "select * from jwellery";
-        ArrayList<Jwellery_pojo> list = new ArrayList<Jwellery_pojo>();
+        String sql = "select * from details";
+        ArrayList<Details_pojo> list = new ArrayList<Details_pojo>();
         Cursor cursor = getWritableDatabase().rawQuery(sql, null);
         while (cursor.moveToNext()) {
             Log.e("movettonext", "lolo");
             // Do Somehing here
-            Jwellery_pojo orderinfo = new Jwellery_pojo();
-            orderinfo.jwelleryid = cursor.getInt(cursor.getColumnIndex("id"));
-            orderinfo.jwellerycid = cursor.getInt(cursor.getColumnIndex("c_id"));
-            orderinfo.jwelleryname = cursor.getString(cursor.getColumnIndex("name"));
-            orderinfo.jwelleryprice = cursor.getString(cursor.getColumnIndex("price"));
-            orderinfo.jwelleryimage = cursor.getString(cursor.getColumnIndex("imageone"));
-            orderinfo.jwellerydesc = cursor.getString(cursor.getColumnIndex("desc"));
+            Details_pojo orderinfo = new Details_pojo();
+            orderinfo.detailsid = cursor.getInt(cursor.getColumnIndex("id"));
+            orderinfo.detailscid = cursor.getInt(cursor.getColumnIndex("c_id"));
+            orderinfo.detailsname = cursor.getString(cursor.getColumnIndex("name"));
+            orderinfo.detailsprice = cursor.getString(cursor.getColumnIndex("price"));
+            orderinfo.detailsdesc = cursor.getString(cursor.getColumnIndex("desc"));
+            orderinfo.detailsimage = cursor.getString(cursor.getColumnIndex("imageone"));
             list.add(orderinfo);
         }
         cursor.close();

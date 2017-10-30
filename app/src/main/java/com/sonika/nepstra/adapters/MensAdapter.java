@@ -3,6 +3,7 @@ package com.sonika.nepstra.adapters;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sonika.nepstra.DetailsActivity;
 import com.sonika.nepstra.R;
+import com.sonika.nepstra.helpers.DetailsHelper;
 import com.sonika.nepstra.helpers.MensHelper;
 import com.sonika.nepstra.helpers.NewArrivalsHelper;
 import com.sonika.nepstra.helpers.OrderHelper;
@@ -32,8 +35,9 @@ public class MensAdapter extends BaseAdapter {
     List<Mens_pojo> mens_pojos = new ArrayList<Mens_pojo>();
     int resource;
     MensHelper dbHelper;
+    DetailsHelper detailsHelper;
     OrderHelper orderHelper;
-    String cname, cprice, cimage;
+    String cname, cprice, cimage,cdesc;
 
     public MensAdapter(Context context, List<Mens_pojo> mens_pojos, int resource) {
         this.context = context;
@@ -57,7 +61,7 @@ public class MensAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         View row = view;
         ViewHolder holder = null;
         if(row == null)
@@ -82,18 +86,44 @@ public class MensAdapter extends BaseAdapter {
 
         dbHelper = new MensHelper(context);
         orderHelper = new OrderHelper(context);
+        detailsHelper = new DetailsHelper(context);
         //holder.orderid.setText(orderInfo.getOrderid().toString());
 
 
         holder.menname.setText("Name:"+" "+orderInfo.getMenname());
         holder.menprice.setText("Price:" + " "+orderInfo.getMenprice());
         Picasso.with(context).load(orderInfo.getMenimage()).into(holder.menimg_product);
-        cname =mens_pojos.get(i).getMenname();
-        cimage = mens_pojos.get(i).getMenimage();
-        cprice =mens_pojos.get(i).getMenprice();
+
+        holder.btn_men_view_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "view more", Toast.LENGTH_SHORT).show();
+                cname =mens_pojos.get(i).getMenname();
+                cimage = mens_pojos.get(i).getMenimage();
+                cprice =mens_pojos.get(i).getMenprice();
+
+                cdesc = mens_pojos.get(i).getMenDesc();
+                ContentValues cv1 = new ContentValues();
+                cv1.put("name", cname);
+                cv1.put("price", cprice);
+                cv1.put("imageone", cimage);
+                cv1.put("desc" , cdesc);
+                detailsHelper.insertdetails(cv1);
+
+                Intent intent = new Intent(context , DetailsActivity.class);
+                context.startActivity(intent);
+
+            }
+        });
+
+
         holder.btn_men_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cname =mens_pojos.get(i).getMenname();
+                cimage = mens_pojos.get(i).getMenimage();
+                cprice =mens_pojos.get(i).getMenprice();
+
                 ContentValues cv = new ContentValues();
                 cv.put("name", cname);
                 cv.put("price", cprice);

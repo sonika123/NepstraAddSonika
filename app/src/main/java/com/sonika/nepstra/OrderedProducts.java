@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ import com.sonika.nepstra.Navigations.Mens;
 import com.sonika.nepstra.Navigations.NewArrival;
 import com.sonika.nepstra.Navigations.Sports;
 import com.sonika.nepstra.Navigations.Womens;
+import com.sonika.nepstra.Paypal.PaypalActivity;
 import com.sonika.nepstra.adapters.OrderAdapter;
 import com.sonika.nepstra.helpers.OrderHelper;
 import com.sonika.nepstra.listener.ListViewListener;
@@ -42,6 +45,7 @@ public class OrderedProducts extends AppCompatActivity implements ListViewListen
     OrderAdapter mOrderAdapter;
     List<OrderedProducts_pojo> orderedProductsList = new ArrayList<>();
     TextView totalAmount;
+    Button checkout;
     DrawerLayout drawerLayout;
 
     @Override
@@ -68,6 +72,14 @@ public class OrderedProducts extends AppCompatActivity implements ListViewListen
 
         dbhelper = new OrderHelper(this);
         lv = (ListView) findViewById(R.id.ordered_productlist);
+        checkout = (Button) findViewById(R.id.btn_proceed_add_to_cart);
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(OrderedProducts.this, PaypalActivity.class);
+                startActivity(i);
+            }
+        });
         totalAmount = (TextView) findViewById(R.id.totalamount);
         getMyTotal();
         show();

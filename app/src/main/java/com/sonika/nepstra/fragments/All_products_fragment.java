@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +28,6 @@ import com.sonika.nepstra.OrderedProducts;
 
 import com.sonika.nepstra.R;
 import com.sonika.nepstra.adapters.AllProductAdapter;
-import com.sonika.nepstra.helpers.MySharedPreference;
 import com.sonika.nepstra.helpers.OrderHelper;
 import com.sonika.nepstra.parser.JsonParserA;
 import com.sonika.nepstra.pojo.AllProducts;
@@ -39,14 +40,19 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
-public class All_products_fragment extends Fragment {
+public class All_products_fragment extends Fragment
+        implements SearchView.OnQueryTextListener,SearchView.OnCloseListener  {
     int flag = 0;
     RecyclerView mRecyclerView;
     List<AllProducts> allProductList = new ArrayList<AllProducts>();
-    MySharedPreference sharedPreference;
+
     OrderHelper orderHelper;
     List<OrderedProducts_pojo> cartlist = new ArrayList<>();
+    AllProductAdapter allProductAdapter = null;
+    SearchView search;
+    List<AllProducts> savedList=new ArrayList<>();
 
 
     @Nullable
@@ -54,9 +60,16 @@ public class All_products_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_all_products, container, false);
-        sharedPreference = new MySharedPreference(getContext());
+
         orderHelper = new OrderHelper(getContext());
+        allProductAdapter = new AllProductAdapter(getContext(), allProductList );
+        search= v.findViewById(R.id.search_it);
+        search.setQueryHint("Search");
         setHasOptionsMenu(true);
+        search.setOnQueryTextListener(this);
+        search.setOnCloseListener(this);
+        search.setInputType(InputType.TYPE_CLASS_TEXT);
+        search.requestFocus();
         perform(v);
         return v;
     }
@@ -65,6 +78,48 @@ public class All_products_fragment extends Fragment {
     private void perform(View v) {
         new AllProductsAsyncTask().execute();
     }
+
+    @Override
+    public boolean onClose() {
+        filterData("");
+        // expandAll();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        filterData(query);
+        // alladapter.filter(query);
+        //displayList();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String newText) {
+        //  alladapter.filter(newText);
+        filterData(newText);
+        // displayList();
+        return false;
+    }
+    public void filterData(String charText){
+        charText = charText.toLowerCase(Locale.getDefault());
+        allProductList.clear();
+
+        if (charText.length() == 0) {
+            allProductList.addAll(savedList);
+        } else {
+            for (AllProducts wp : savedList) {
+                if (wp.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    allProductList.add(wp);
+
+                    Log.e("LIst",wp.getName()+""+charText+allProductList.size()+allProductList.get(0).getName());
+                }
+            }
+        }
+        allProductAdapter.notifyDataSetChanged();
+    }
+
+
 
     class AllProductsAsyncTask extends AsyncTask<String, String, String> {
         ProgressDialog mprogressDialog;
@@ -179,9 +234,9 @@ public class All_products_fragment extends Fragment {
                             String c_name = null;
                             String c_slug = null;
                             for (int j = 0; j < categories_array.length(); j++) {
-                                 c_id = categories_array.getJSONObject(j).getInt("id");
-                                 c_name = categories_array.getJSONObject(j).getString("name");
-                                 c_slug = categories_array.getJSONObject(j).getString("slug");
+                                c_id = categories_array.getJSONObject(j).getInt("id");
+                                c_name = categories_array.getJSONObject(j).getString("name");
+                                c_slug = categories_array.getJSONObject(j).getString("slug");
                                 Log.e("catogory", "catogory");
                             }
 
@@ -206,13 +261,13 @@ public class All_products_fragment extends Fragment {
                             String i_name = null;
                             String i_alt = null;
                             for (int k = 0; k < image_array.length(); k++) {
-                                 i_id = image_array.getJSONObject(k).getInt("id");
-                                 i_date_created = image_array.getJSONObject(k).getString("date_created");
-                                 i_date_created_gmt = image_array.getJSONObject(k).getString("date_created_gmt");
-                                 i_date_modified = image_array.getJSONObject(k).getString("date_modified");
-                                 i_date_modified_gmt = image_array.getJSONObject(k).getString("date_modified_gmt");
-                                 i_src = image_array.getJSONObject(k).getString("src");
-                                 i_name = image_array.getJSONObject(k).getString("name");
+                                i_id = image_array.getJSONObject(k).getInt("id");
+                                i_date_created = image_array.getJSONObject(k).getString("date_created");
+                                i_date_created_gmt = image_array.getJSONObject(k).getString("date_created_gmt");
+                                i_date_modified = image_array.getJSONObject(k).getString("date_modified");
+                                i_date_modified_gmt = image_array.getJSONObject(k).getString("date_modified_gmt");
+                                i_src = image_array.getJSONObject(k).getString("src");
+                                i_name = image_array.getJSONObject(k).getString("name");
                                 i_alt = image_array.getJSONObject(k).getString("alt");
                                 i_position = image_array.getJSONObject(k).getInt("position");
                                 Log.e("imagevitra", "imagevitra");
@@ -240,22 +295,23 @@ public class All_products_fragment extends Fragment {
                             JSONArray self_array = _links.getJSONArray("self");
                             String self_href = null;
                             for (int m = i; m < self_array.length(); m++) {
-                               self_href = self_array.getJSONObject(0).getString("href");
-                           }
+                                self_href = self_array.getJSONObject(0).getString("href");
+                            }
                             JSONArray collection_array = _links.getJSONArray("collection");
                             String collection_href = null;
                             for (int n = i; n < collection_array.length(); n++) {
-                                 collection_href = collection_array.getJSONObject(0).getString("href");
+                                collection_href = collection_array.getJSONObject(0).getString("href");
                             }
 
                             AllProducts allProducts =
                                     new AllProducts(id,total_sales,download_limit,download_expiry, shipping_class_id,rating_count, parent_id,c_id,i_id,i_position,menu_order,m_id,tag_id,m_key,m_value,price,name,slug,permalink,date_created,date_created_gmt,date_modified,date_modified_gmt,type,status,weight,catalog_visibility,description,short_description,sku,regular_price,sale_price,price_html,external_url,button_text,tag_id,tax_status,tax_class,backorders,length,width,height,shipping_class,purchase_note,average_rating,c_name,c_slug,i_date_created,i_date_created_gmt,i_date_modified,i_date_modified_gmt,i_src,i_name,i_alt,self_href,collection_href,tag_name,tag_slug,downloads,related_ids,upsell_ids,cross_sell_ids,tags,attributes,default_attributes,variations,grouped_products,featured,date_on_sale_from,date_on_sale_from_gmt,date_on_sale_to,date_on_sale_to_gmt,on_sale,purchasable,virtual,downloadable,manage_stock,stock_quantity,in_stock,backorders_allowed,backordered,sold_individually,shipping_required,shipping_taxable,reviews_allowed);
                             allProductList.add(allProducts);
-
+                            savedList.add(allProducts);
                             flag = 2;
                         }
+
                     }
-                     else {
+                    else {
                         flag = 3;
                     }
                 }
@@ -278,15 +334,12 @@ public class All_products_fragment extends Fragment {
                 GridLayoutManager mGrid = new GridLayoutManager(getContext(), 2);
                 mRecyclerView.setLayoutManager(mGrid);
                 mRecyclerView.setHasFixedSize(true);
-
                 mRecyclerView.setNestedScrollingEnabled(false);
 
                 Log.e("rrrrrrrrrrrrr", String.valueOf(allProductList.size()));
 
-                AllProductAdapter HelloAdapter = new AllProductAdapter(getContext(), allProductList);
-
-                mRecyclerView.setAdapter(HelloAdapter);
-
+                allProductAdapter = new AllProductAdapter(getContext(), allProductList);
+                mRecyclerView.setAdapter(allProductAdapter);
 
 
             } else {
@@ -294,6 +347,7 @@ public class All_products_fragment extends Fragment {
             }
         }
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

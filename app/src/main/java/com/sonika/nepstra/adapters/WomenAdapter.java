@@ -3,6 +3,8 @@ package com.sonika.nepstra.adapters;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sonika.nepstra.DetailsActivity;
 import com.sonika.nepstra.R;
+import com.sonika.nepstra.helpers.DetailsHelper;
 import com.sonika.nepstra.helpers.OrderHelper;
 import com.sonika.nepstra.helpers.WomenHelper;
 import com.sonika.nepstra.listener.ListViewListener;
@@ -33,7 +37,8 @@ public class WomenAdapter extends BaseAdapter {
     int resource;
     WomenHelper dbHelper;
     OrderHelper orderHelper;
-    String cname, cimage, cprice;
+    DetailsHelper detailsHelper;
+    String cname, cimage, cprice, cdesc;
 
     public WomenAdapter(Context context, List<WomenPoducts_pojo> womenPoductsPojos, int resource) {
         this.context = context;
@@ -57,7 +62,7 @@ public class WomenAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         View row = view;
         ViewHolder holder = null;
         if(row == null)
@@ -82,20 +87,41 @@ public class WomenAdapter extends BaseAdapter {
 
         dbHelper = new WomenHelper(context);
         orderHelper = new OrderHelper(context);
-
+        detailsHelper =  new DetailsHelper(context);
         //holder.orderid.setText(orderInfo.getOrderid().toString());
 
 
         holder.wname.setText("Name:"+" "+orderInfo.getWname());
         holder.wprice.setText("Price:" + " "+orderInfo.getWprice());
         Picasso.with(context).load(orderInfo.getWimage()).into(holder.wimg_product);
-        cimage = womenPoductsPojos.get(i).getWimage();
-        cname = womenPoductsPojos.get(i).getWname();
-        cprice = womenPoductsPojos.get(i).getWprice();
 
+        holder.btn_women_view_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "view more", Toast.LENGTH_SHORT).show();
+                cimage = womenPoductsPojos.get(i).getWimage();
+                cname = womenPoductsPojos.get(i).getWname();
+                cprice = womenPoductsPojos.get(i).getWprice();
+                cdesc = womenPoductsPojos.get(i).getWdesc();
+                ContentValues cv1 = new ContentValues();
+                cv1.put("name", cname);
+                cv1.put("price", cprice);
+                cv1.put("imageone", cimage);
+                cv1.put("desc" , cdesc);
+                detailsHelper.insertdetails(cv1);
+
+                Intent intent = new Intent(context , DetailsActivity.class);
+                context.startActivity(intent);
+                Log.e("joker", "lol");
+            }
+        });
         holder.btn_women_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cimage = womenPoductsPojos.get(i).getWimage();
+                cname = womenPoductsPojos.get(i).getWname();
+                cprice = womenPoductsPojos.get(i).getWprice();
+
                 ContentValues cv = new ContentValues();
                 cv.put("name", cname);
                 cv.put("price", cprice);
@@ -108,7 +134,7 @@ public class WomenAdapter extends BaseAdapter {
         return row;
     }
 
-  static class ViewHolder {
+    static class ViewHolder {
         TextView wname, wprice, wid, wcid;
         Button btn_women_add_to_cart, btn_women_view_more;
         ImageView wimg_product;

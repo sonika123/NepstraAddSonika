@@ -5,19 +5,20 @@ package com.sonika.nepstra.pojo;
  */
 
 public class Mens_pojo {
-    public String menname, menprice, menimage;
+    public String menname, menprice, menimage, menDesc;
     public Integer menid;
     public Integer mencid;
 
-    public Mens_pojo(String menname, String menprice, String menimage, Integer menid, Integer mencid) {
+    public Mens_pojo() {
+    }
 
+    public Mens_pojo(String menname, String menprice, String menimage, String menDesc, Integer menid, Integer mencid) {
         this.menname = menname;
         this.menprice = menprice;
         this.menimage = menimage;
+        this.menDesc = menDesc;
         this.menid = menid;
         this.mencid = mencid;
-    }
-    public Mens_pojo() {
     }
 
     public String getMenname() {
@@ -44,6 +45,14 @@ public class Mens_pojo {
         this.menimage = menimage;
     }
 
+    public String getMenDesc() {
+        return menDesc;
+    }
+
+    public void setMenDesc(String menDesc) {
+        this.menDesc = menDesc;
+    }
+
     public Integer getMenid() {
         return menid;
     }
@@ -59,6 +68,4 @@ public class Mens_pojo {
     public void setMencid(Integer mencid) {
         this.mencid = mencid;
     }
-
-
 }

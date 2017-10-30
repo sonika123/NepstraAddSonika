@@ -26,6 +26,7 @@ public class MensHelper extends SQLiteOpenHelper {
             "                       `name` TEXT,\n" +
             "                       `price` TEXT,\n" +
             "                       `imageone` TEXT\n" +
+            "                       `desc` TEXT\n" +
             "                      );";
 
     public MensHelper(Context context) {
@@ -63,6 +64,7 @@ public class MensHelper extends SQLiteOpenHelper {
             orderinfo.menname = cursor.getString(cursor.getColumnIndex("name"));
             orderinfo.menprice = cursor.getString(cursor.getColumnIndex("price"));
             orderinfo.menimage = cursor.getString(cursor.getColumnIndex("imageone"));
+            orderinfo.menDesc = cursor.getString(cursor.getColumnIndex("desc"));
             list.add(orderinfo);
         }
         cursor.close();

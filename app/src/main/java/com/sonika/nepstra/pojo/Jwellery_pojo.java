@@ -5,19 +5,20 @@ package com.sonika.nepstra.pojo;
  */
 
 public class Jwellery_pojo {
-    public String jwelleryname, jwelleryprice, jwelleryimage;
+    public String jwelleryname, jwelleryprice, jwelleryimage, jwellerydesc;
     public Integer jwelleryid;
     public Integer jwellerycid;
 
-    public Jwellery_pojo(String jwelleryname, String jwelleryprice, String jwelleryimage, Integer jwelleryid, Integer jwellerycid) {
+    public Jwellery_pojo() {
+    }
+
+    public Jwellery_pojo(String jwelleryname, String jwelleryprice, String jwelleryimage, String jwellerydesc, Integer jwelleryid, Integer jwellerycid) {
         this.jwelleryname = jwelleryname;
         this.jwelleryprice = jwelleryprice;
         this.jwelleryimage = jwelleryimage;
+        this.jwellerydesc = jwellerydesc;
         this.jwelleryid = jwelleryid;
         this.jwellerycid = jwellerycid;
-    }
-
-    public Jwellery_pojo() {
     }
 
     public String getJwelleryname() {
@@ -42,6 +43,14 @@ public class Jwellery_pojo {
 
     public void setJwelleryimage(String jwelleryimage) {
         this.jwelleryimage = jwelleryimage;
+    }
+
+    public String getJwellerydesc() {
+        return jwellerydesc;
+    }
+
+    public void setJwellerydesc(String jwellerydesc) {
+        this.jwellerydesc = jwellerydesc;
     }
 
     public Integer getJwelleryid() {

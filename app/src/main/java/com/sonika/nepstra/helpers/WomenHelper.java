@@ -25,6 +25,7 @@ public class WomenHelper extends SQLiteOpenHelper {
             "                       `c_id` INTEGER,\n" +
             "                       `name` TEXT,\n" +
             "                       `price` TEXT,\n" +
+            "                       `desc` TEXT,\n" +
             "                       `imageone` TEXT\n" +
             "                      );";
 
@@ -49,7 +50,7 @@ public class WomenHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<WomenPoducts_pojo> getwomen() {
-        Log.e("getOrderMessage", "vaeraxa");
+        Log.e("womenOrder", "vaeraxa");
         String sql = "select * from women";
         ArrayList<WomenPoducts_pojo> list = new ArrayList<WomenPoducts_pojo>();
         Cursor cursor = getWritableDatabase().rawQuery(sql, null);
@@ -62,6 +63,7 @@ public class WomenHelper extends SQLiteOpenHelper {
             orderinfo.wname = cursor.getString(cursor.getColumnIndex("name"));
             orderinfo.wprice = cursor.getString(cursor.getColumnIndex("price"));
             orderinfo.wimage = cursor.getString(cursor.getColumnIndex("imageone"));
+            orderinfo.wdesc = cursor.getString(cursor.getColumnIndex("desc"));
             list.add(orderinfo);
         }
         cursor.close();

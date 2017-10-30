@@ -10,14 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import com.sonika.nepstra.DetailsActivity;
 import com.sonika.nepstra.R;
 import com.sonika.nepstra.helpers.ArtAndCraftHelper;
+import com.sonika.nepstra.helpers.DetailsHelper;
 import com.sonika.nepstra.helpers.JwelleryHelper;
 import com.sonika.nepstra.helpers.MensHelper;
-import com.sonika.nepstra.helpers.MySharedPreference;
 import com.sonika.nepstra.helpers.NewArrivalsHelper;
 import com.sonika.nepstra.helpers.OrderHelper;
 import com.sonika.nepstra.helpers.SportsHelper;
@@ -37,21 +35,18 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
     public Context context;
     private List<AllProducts> allProductList;
 
-
-    MySharedPreference sharedPreference;
-    Gson gson;
-
     String oname, oprice, oimage, odesc;
     Integer cat_id;
     OrderHelper dbHelper;
     List<OrderedProducts_pojo> cartProductsList = new ArrayList<>();
+    //DetailsHelper detailsHelper;
     WomenHelper womenHelper;
     NewArrivalsHelper arrivalsHelper;
     ArtAndCraftHelper artAndCraftHelper;
     MensHelper mensHelper;
     JwelleryHelper jwelleryHelper;
     SportsHelper sportsHelper;
-    MySharedPreference mySharedPreference;
+    DetailsHelper detailsHelper;
     public AllProductAdapter(Context context, List<AllProducts> allproductList) {
         this.context = context;
         this.allProductList = allproductList;
@@ -70,6 +65,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
         mensHelper = new MensHelper(context);
         jwelleryHelper = new JwelleryHelper(context);
         sportsHelper = new SportsHelper(context);
+        detailsHelper = new DetailsHelper(context);
         return new AllProductHolder(view);
     }
 
@@ -84,10 +80,25 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
         allholder.viewMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AllProducts intentprod = allProductList.get(position);
-                Intent intent = new Intent(context, DetailsActivity.class);
-                intent.putExtra("hello", intentprod);
+                oname = allProductList.get(position).getName();
+                oprice = allProductList.get(position).getPrice();
+                oimage = allProductList.get(position).getI_src();
+                odesc = allProductList.get(position).getDescription();
+                cat_id = allProductList.get(position).getC_id();
+
+                ContentValues contentValue = new ContentValues();
+                contentValue.put("name", oname);
+                contentValue.put("price", oprice);
+                contentValue.put("imageone", oimage);
+                contentValue.put("desc", odesc);
+                contentValue.put("c_id", cat_id);
+                detailsHelper.insertdetails(contentValue);
+                Intent intent =  new Intent(context, DetailsActivity.class);
                 context.startActivity(intent);
+//                AllProducts intentprod = allProductList.get(position);
+//                Intent intent = new Intent(context, DetailsActivity.class);
+//                intent.putExtra("hello", intentprod);
+//                context.startActivity(intent);
             }
         });
 
@@ -101,18 +112,22 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
                 oprice = allProductList.get(position).getPrice();
                 oimage = allProductList.get(position).getI_src();
 
+                //odesc = allProductList.get(position).getDescription();
+
                 ContentValues contentValues = new ContentValues();
                 contentValues.put("name", oname);
                 contentValues.put("price", oprice);
                 contentValues.put("imageone", oimage);
+                // contentValues.put("desc", odesc);
 
 //                Log.e("pizza", "lovet");
 //                Log.e("momo", oname);
 //                Log.e("burger", oprice);
 //                Log.e("oooo", oimage);
                 dbHelper.insertOrderInfo(contentValues);
-                cartProductsList = dbHelper.getOrderMessage();
-                Log.e("orderedsonika", String.valueOf(cartProductsList.size()));
+                //detailsHelper.insertdetails(contentValues);
+//                cartProductsList = dbHelper.getOrderMessage();
+//                Log.e("orderedsonika", String.valueOf(cartProductsList.size()));
 
 //                mySharedPreference = new MySharedPreference(context);
 ////
@@ -134,6 +149,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
             contentValues.put("name", oname);
             contentValues.put("price", oprice);
             contentValues.put("imageone", oimage);
+            contentValues.put("desc", odesc);
             womenHelper.insertwomen(contentValues);
         }
         if (cat_id == 17) {
@@ -151,6 +167,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
             contentValues.put("name", oname);
             contentValues.put("price", oprice);
             contentValues.put("imageone", oimage);
+            contentValues.put("desc", odesc);
             artAndCraftHelper.insertwartandcraft(contentValues);
         }
         if (cat_id == 28){
@@ -159,6 +176,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
             contentValues.put("name", oname);
             contentValues.put("price", oprice);
             contentValues.put("imageone", oimage);
+            contentValues.put("desc", odesc);
             mensHelper.insertmen(contentValues);
         }
         if (cat_id == 25){
@@ -167,6 +185,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
             contentValues.put("name", oname);
             contentValues.put("price", oprice);
             contentValues.put("imageone", oimage);
+            contentValues.put("desc", odesc);
             jwelleryHelper.insertjwellery(contentValues);
         }
         if (cat_id == 27){
@@ -175,10 +194,11 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
             contentValues.put("name", oname);
             contentValues.put("price", oprice);
             contentValues.put("imageone", oimage);
+            contentValues.put("desc", odesc);
             sportsHelper.insertsports(contentValues);
         }
 
-        }
+    }
 
 
 

@@ -84,7 +84,8 @@ public class OrderAdapter extends BaseAdapter{
         holder.name.setText("Name:"+" "+orderInfo.getOrderedname());
         holder.price.setText("Price:" + " "+orderInfo.getOrderedprice());
         Picasso.with(context).load(orderInfo.getOrderedimage()).into(holder.img_product);
-       holder.orderid.setText(position + 1 +" ");
+        //holder.orderid.setText(position + 1 +" ");
+        holder.orderid.setText("id: " +orderInfo.getOrderid());
 
         holder.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override

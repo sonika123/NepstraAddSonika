@@ -13,6 +13,7 @@
 
         <Button
             android:id="@+id/buttonPay"
+            android:textAllCaps="false"
             android:text="Paypal "
             android:textColor="@color/colorAppWhite"
             android:layout_width="200dp"
@@ -26,6 +27,7 @@
             app:layout_constraintLeft_toLeftOf="@+id/txtPayVia" />
         <Button
             android:id="@+id/buttonbank"
+            android:textAllCaps="false"
             android:text="Direct Bank Transfer "
             android:background="@drawable/add_to_cart_button_design"
             android:textColor="@color/colorAppWhite"
@@ -39,6 +41,7 @@
             app:layout_constraintLeft_toLeftOf="@+id/buttonCash" />
         <Button
             android:id="@+id/buttonCash"
+            android:textAllCaps="false"
             android:text="Cash on delivery "
             android:textColor="@color/colorAppWhite"
             android:layout_width="200dp"

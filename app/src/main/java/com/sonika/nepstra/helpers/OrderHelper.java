@@ -22,6 +22,7 @@ public class OrderHelper extends SQLiteOpenHelper {
     String ORDER_TABLE = "CREATE TABLE if not exists `user_orders`  (\n" +
             "                       `id` INTEGER PRIMARY KEY ,\n" +
             "                       `name` TEXT,\n" +
+            "                       `cat_id` TEXT,\n" +
             "                       `price` TEXT,\n" +
             "                       `imageone` TEXT\n" +
             "                      );";

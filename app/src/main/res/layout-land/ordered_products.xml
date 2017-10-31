@@ -6,25 +6,46 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="10">
-
-
-    <TextView
-        android:id="@+id/totalamount"
-        android:layout_weight="2"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sub Total"
-        android:textSize="12sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="@+id/ordered_productlist"
+        app:layout_constraintRight_toRightOf="@+id/btn_proceed_add_to_cart"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/ordered_productlist"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="@+id/btn_proceed_add_to_cart"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_proceed_add_to_cart" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_proceed_add_to_cart">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sub Total:"
+            android:textSize="12sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="0dp" />
+
+
+
+        <TextView
+            android:id="@+id/totalamount"
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sub Total"
+            android:textSize="12sp"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/textView"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            android:layout_marginBottom="0dp"
+            android:layout_marginRight="0dp" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <Button
         android:layout_weight="2"
@@ -36,14 +57,13 @@
         android:background="@drawable/add_to_cart_button_design"
         android:textColor="@color/colorAppWhite"
         android:textSize="12sp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingLeft="64dp"
+        android:paddingRight="64dp"
         android:textStyle="bold"
-        android:layout_marginRight="0dp"
-        app:layout_constraintRight_toRightOf="@+id/totalamount"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/totalamount"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp" />
 
@@ -52,13 +72,13 @@
         android:layout_width="360dp"
         android:layout_height="200dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="50dp"
         android:layout_weight="6"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 
 </android.support.constraint.ConstraintLayout>

@@ -1,9 +1,11 @@
 package com.sonika.nepstra;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -46,7 +48,8 @@ public class OrderedProducts extends AppCompatActivity implements ListViewListen
     List<OrderedProducts_pojo> orderedProductsList = new ArrayList<>();
     TextView totalAmount;
     Button checkout;
-    DrawerLayout drawerLayout;
+    SharedPreferences sm;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,7 +97,20 @@ public class OrderedProducts extends AppCompatActivity implements ListViewListen
             super.onBackPressed();
         }
     }
+    @Override
+    public void getMyTotal() {
+        String result = dbhelper.GetTotal();
+        totalAmount.setText(result);
 
+        String text = (String) totalAmount.getText();
+
+        sm = getSharedPreferences("USER_LOGIN", 0);
+        SharedPreferences.Editor editor = sm.edit();
+        editor.putString("total_amount",text);
+        editor.apply();
+        editor.commit();
+
+    }
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -162,11 +178,7 @@ public class OrderedProducts extends AppCompatActivity implements ListViewListen
             lv.deferNotifyDataSetChanged();
         }
     }
-    @Override
-    public void getMyTotal() {
-        String result = dbhelper.GetTotal();
-        totalAmount.setText("Sub Total : " + result);
-    }
+
 
 
 }

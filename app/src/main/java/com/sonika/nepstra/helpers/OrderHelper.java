@@ -94,12 +94,5 @@ public class OrderHelper extends SQLiteOpenHelper {
 
     }
 
-    public int  TotalItems()
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor c = db.rawQuery("select * from user_orders",null);
-        int total_record = c.getCount();
-        return total_record;
 
-    }
 }

@@ -3,6 +3,7 @@ package com.sonika.nepstra.Paypal;
 import android.app.Activity;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,6 +23,8 @@ import com.sonika.nepstra.R;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * Created by sonika on 10/30/2017.
@@ -31,10 +34,11 @@ public class PaypalActivity extends AppCompatActivity implements View.OnClickLis
 
     //The views
     private Button buttonPay;
+    SharedPreferences sm;
   //  private EditText editTextAmount;
 
     //Payment Amount
-    private String paymentAmount;
+     String paymentAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +76,16 @@ public class PaypalActivity extends AppCompatActivity implements View.OnClickLis
         stopService(new Intent(this, PayPalService.class));
         super.onDestroy();
     }
+
     private void getPayment() {
+
+        sm = getSharedPreferences("USER_LOGIN", 0);
+        paymentAmount = sm.getString("total_amount", null);
+        Log.e("hellopayment", paymentAmount);
+//        BigDecimal pay = new BigDecimal(paymentAmount);
+//
+//        NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US);
+//
 
         //Getting the amount from editText
 //        paymentAmount = editTextAmount.getText().toString();
@@ -88,7 +101,7 @@ public class PaypalActivity extends AppCompatActivity implements View.OnClickLis
 //            Toast.makeText(getApplicationContext(), "Amount is 0", Toast.LENGTH_SHORT).show();
 //
 //        } else {
-         PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf("1")), "USD", "Total cost:",
+         PayPalPayment payment = new PayPalPayment(new BigDecimal(paymentAmount), "USD", "Total cost:",
                  PayPalPayment.PAYMENT_INTENT_SALE);
 
             //Creating Paypal Payment activity intent

@@ -85,31 +85,27 @@ public class OrderAdapter extends BaseAdapter{
 
         Log.e("objects",objects.get(position).getOrderedcat_id());
 
-        List<String> son = new ArrayList<>();
+        List<String> listOfID = new ArrayList<>();
         for (int i = 0; i<objects.size(); i++)
         {
-            son.add(objects.get(i).getOrderedcat_id());
-            Log.e("fish", son.toString());
+            listOfID.add(objects.get(i).getOrderedcat_id());
+            Log.e("fish", listOfID.toString());
 
         }
-
-
-
-
-
         holder.name.setText("Name : " +orderInfo.getOrderedname());
-        holder.price.setText("Price : " +orderInfo.getOrderedprice());
+        int totalPrice = Integer.valueOf(orderInfo.getOrderedprice()) * orderInfo.count;
+        holder.price.setText("Price : " +totalPrice);
         Picasso.with(context).load(orderInfo.getOrderedimage()).into(holder.img_product);
+        holder.orderid.setText(orderInfo.count+"");
 
-
-        for (int i =0; i<son.size(); i++)
-        {
-
-            Log.e("xiryo", son.get(i));
-            int occurrences = Collections.frequency(son, son.get(i));
-            Log.e("prakriti", son.get(i) + ":" + occurrences);
-            holder.orderid.setText(son.get(i));
-        }
+//        for (int i =0; i<listOfID.size(); i++)
+//        {
+//
+//            Log.e("xiryo", listOfID.get(i));
+//            int occurrences = Collections.frequency(listOfID, listOfID.get(i));
+//            Log.e("prakriti", listOfID.get(i) + ":" + occurrences);
+//            holder.orderid.setText(occurrences+"");
+//        }
 
 
         holder.btnRemove.setOnClickListener(new View.OnClickListener() {

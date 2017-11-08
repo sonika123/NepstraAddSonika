@@ -115,14 +115,22 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
                 oprice = allProductList.get(position).getPrice();
                 oimage = allProductList.get(position).getI_src();
                 cat_id = allProductList.get(position).getI_id();
-
-
                 ContentValues contentValues = new ContentValues();
+                ArrayList<OrderedProducts_pojo> cartItems = dbHelper.getOrderMessage();
+               for(OrderedProducts_pojo cartItem: cartItems){
+                   if(cartItem.getOrderedcat_id().equals(String.valueOf(cat_id))){
+                       contentValues.put("count",cartItem.count+1);
+                        dbHelper.updateCount(cat_id.toString(),contentValues);
+                       return;
+                   }
+               }
+
+
                 contentValues.put("name", oname);
                 contentValues.put("price", oprice);
                 contentValues.put("imageone", oimage);
                 contentValues.put("cat_id", cat_id);
-                contentValues.put("count", count);
+                contentValues.put("count", 1);
                 dbHelper.insertOrderInfo(contentValues);
 
 

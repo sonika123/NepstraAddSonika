@@ -97,6 +97,7 @@ public class OrderedProducts extends AppCompatActivity implements ListViewListen
             super.onBackPressed();
         }
     }
+
     @Override
     public void getMyTotal() {
         String result = dbhelper.GetTotal();

@@ -37,7 +37,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
     private List<AllProducts> allProductList;
 
     String oname, oprice, oimage, odesc;
-    Integer cat_id, count;
+    Integer cat_id;
     OrderHelper dbHelper;
     List<OrderedProducts_pojo> cartProductsList;
     //DetailsHelper detailsHelper;
@@ -67,8 +67,6 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
         jwelleryHelper = new JwelleryHelper(context);
         sportsHelper = new SportsHelper(context);
         detailsHelper = new DetailsHelper(context);
-
-        count = 1;
         return new AllProductHolder(view);
     }
 
@@ -110,19 +108,26 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show();
-
                 oname = allProductList.get(position).getName();
                 oprice = allProductList.get(position).getPrice();
                 oimage = allProductList.get(position).getI_src();
                 cat_id = allProductList.get(position).getI_id();
 
-
                 ContentValues contentValues = new ContentValues();
+                ArrayList<OrderedProducts_pojo> cartItems = dbHelper.getOrderMessage();
+                for(OrderedProducts_pojo cartItem: cartItems){
+                    if(cartItem.getOrderedcat_id().equals(String.valueOf(cat_id))){
+                        contentValues.put("count",cartItem.count+1);
+                        dbHelper.updateCount(cat_id.toString(),contentValues);
+                        return;
+                    }
+                }
+
                 contentValues.put("name", oname);
                 contentValues.put("price", oprice);
                 contentValues.put("imageone", oimage);
                 contentValues.put("cat_id", cat_id);
-                contentValues.put("count", count);
+//                contentValues.put("count", count);
                 dbHelper.insertOrderInfo(contentValues);
 
 

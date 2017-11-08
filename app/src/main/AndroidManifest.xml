@@ -4,8 +4,7 @@
     package="com.sonika.nepstra">
 
     <uses-sdk tools:overrideLibrary="com.paypal.android.sdk.payments" />
-
-    <application
+   <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,24 +15,36 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailsActivity" />
-        <activity android:name=".OrderedProducts" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".Navigations.Womens" />
-        <activity android:name=".Navigations.NewArrival" />
-        <activity android:name=".Navigations.ArtAndCraft" />
-        <activity android:name=".Navigations.Mens" />
-        <activity android:name=".Navigations.Jwellery" />
-        <activity android:name=".Navigations.Kids" />
-        <activity android:name=".Navigations.Sports" />
+        <activity android:name=".DetailsActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".OrderedProducts"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".RegisterActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".LoginActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".Navigations.Womens"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".Navigations.NewArrival"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".Navigations.ArtAndCraft"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".Navigations.Mens"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".Navigations.Jwellery"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".Navigations.Kids"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".Navigations.Sports"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
-        <activity android:name=".Paypal.ConfirmationActivity"/>
-        <activity android:name=".Paypal.PaypalActivity"/>
+        <activity android:name=".Paypal.ConfirmationActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".Paypal.PaypalActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
     </application>
 

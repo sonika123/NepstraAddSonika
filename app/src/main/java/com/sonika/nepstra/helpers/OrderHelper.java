@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.sonika.nepstra.pojo.OrderedProducts_pojo;
 
@@ -22,6 +23,7 @@ public class OrderHelper extends SQLiteOpenHelper {
     String ORDER_TABLE = "CREATE TABLE if not exists `user_orders`  (\n" +
             "                       `id` INTEGER PRIMARY KEY ,\n" +
             "                       `name` TEXT,\n" +
+            "                       `count` INTEGER,\n" +
             "                       `cat_id` TEXT,\n" +
             "                       `price` TEXT,\n" +
             "                       `imageone` TEXT\n" +
@@ -41,9 +43,13 @@ public class OrderHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
-    } public void insertOrderInfo(ContentValues cv) {
+    }
+
+    public void insertOrderInfo(ContentValues cv) {
+
+
         getWritableDatabase().insert("user_orders", "", cv);
-        Log.e("insertvaeraxa", "yes");
+        Log.e("insertvaeraxa", "yes1");
 
     }
 
@@ -53,11 +59,12 @@ public class OrderHelper extends SQLiteOpenHelper {
         ArrayList<OrderedProducts_pojo> list = new ArrayList<OrderedProducts_pojo>();
         Cursor cursor = getWritableDatabase().rawQuery(sql, null);
         while (cursor.moveToNext()) {
-            Log.e("movettonext", "lolo");
+            Log.e("movettonext", "yes");
             // Do Somehing here
             OrderedProducts_pojo orderinfo = new OrderedProducts_pojo();
             orderinfo.orderid = cursor.getInt(cursor.getColumnIndex("id"));
             orderinfo.orderedname = cursor.getString(cursor.getColumnIndex("name"));
+            orderinfo.count = cursor.getInt(cursor.getColumnIndex("count"));
             orderinfo.orderedcat_id = cursor.getString(cursor.getColumnIndex("cat_id"));
             orderinfo.orderedprice = cursor.getString(cursor.getColumnIndex("price"));
             orderinfo.orderedimage = cursor.getString(cursor.getColumnIndex("imageone"));
@@ -91,8 +98,6 @@ public class OrderHelper extends SQLiteOpenHelper {
             result = String.valueOf(GetTotal.getDouble(GetTotal.getColumnIndex("myTotal")));
         }
         return result;
-
     }
-
 
 }

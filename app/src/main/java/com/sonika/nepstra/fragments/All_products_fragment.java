@@ -70,6 +70,7 @@ public class All_products_fragment extends Fragment
         search.setOnCloseListener(this);
         search.setInputType(InputType.TYPE_CLASS_TEXT);
         search.requestFocus();
+
         perform(v);
         return v;
     }
@@ -359,7 +360,9 @@ public class All_products_fragment extends Fragment
         //int mCount = sharedPreference.retrieveProductCount();
         cartlist = orderHelper.getOrderMessage();
 
+
         int mCount = cartlist.size();
+
         Log.e("totalitems", String.valueOf(mCount));
         getActivity().invalidateOptionsMenu();
         menuItem.setIcon(buildCounterDrawable(mCount, R.drawable.cart));

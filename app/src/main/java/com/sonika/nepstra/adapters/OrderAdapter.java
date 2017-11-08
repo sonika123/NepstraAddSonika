@@ -15,12 +15,15 @@ import android.widget.Toast;
 import com.sonika.nepstra.R;
 import com.sonika.nepstra.helpers.OrderHelper;
 import com.sonika.nepstra.listener.ListViewListener;
-import com.sonika.nepstra.pojo.AllProducts;
 import com.sonika.nepstra.pojo.OrderedProducts_pojo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sonika on 5/9/2017.
@@ -32,6 +35,7 @@ public class OrderAdapter extends BaseAdapter{
     int resource;
     OrderHelper dbHelper;
     private ListViewListener mListener;
+
 
     public OrderAdapter(Context context, List<OrderedProducts_pojo> objects, int resource) {
         this.context = context;
@@ -63,7 +67,6 @@ public class OrderAdapter extends BaseAdapter{
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
             row = inflater.inflate(resource, parent, false);
             holder = new ViewHolder();
-
             holder.name = row.findViewById(R.id.txt_name_add_to_cart);
             holder.price= row.findViewById(R.id.txt_price_add_to_cart);
             holder.img_product = row.findViewById(R.id.img_add_to_cart);
@@ -78,14 +81,35 @@ public class OrderAdapter extends BaseAdapter{
         final OrderedProducts_pojo orderInfo = objects.get(position);
 
         dbHelper = new OrderHelper(context);
+        objects = dbHelper.getOrderMessage();
 
-        //holder.orderid.setText(orderInfo.getOrderid().toString());
+        Log.e("objects",objects.get(position).getOrderedcat_id());
+
+        List<String> son = new ArrayList<>();
+        for (int i = 0; i<objects.size(); i++)
+        {
+            son.add(objects.get(i).getOrderedcat_id());
+            Log.e("fish", son.toString());
+
+        }
 
 
-        holder.name.setText("Name:"+" "+orderInfo.getOrderedname());
-        holder.price.setText("Price:" + " "+orderInfo.getOrderedprice());
+
+
+
+        holder.name.setText("Name : " +orderInfo.getOrderedname());
+        holder.price.setText("Price : " +orderInfo.getOrderedprice());
         Picasso.with(context).load(orderInfo.getOrderedimage()).into(holder.img_product);
-        holder.orderid.setText(position + 1 +" ");
+
+
+        for (int i =0; i<son.size(); i++)
+        {
+
+            Log.e("xiryo", son.get(i));
+            int occurrences = Collections.frequency(son, son.get(i));
+            Log.e("prakriti", son.get(i) + ":" + occurrences);
+            holder.orderid.setText(son.get(i));
+        }
 
 
         holder.btnRemove.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +129,7 @@ public class OrderAdapter extends BaseAdapter{
     public void setListener(ListViewListener listener) {
         mListener = listener;
     }
+
 
 
 

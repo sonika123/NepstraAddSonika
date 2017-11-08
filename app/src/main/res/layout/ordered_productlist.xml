@@ -39,7 +39,7 @@
                 android:id="@+id/ordered_productlist_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pairs"
+                android:text="pairs"
                 android:background="@drawable/pair_background"
                 android:paddingBottom="2dp"
                 android:paddingTop="2dp"

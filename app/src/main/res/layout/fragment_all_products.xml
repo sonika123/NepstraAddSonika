@@ -27,7 +27,8 @@
             android:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <com.synnapps.carouselview.CarouselView
             android:id="@+id/carouselview"
@@ -36,7 +37,8 @@
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="@+id/search_it"
             app:layout_constraintStart_toStartOf="@+id/search_it"
-            app:layout_constraintTop_toBottomOf="@+id/search_it" />
+            app:layout_constraintTop_toBottomOf="@+id/search_it"
+            tools:layout_editor_absoluteX="8dp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view2"
@@ -53,6 +55,7 @@
             app:layout_constraintEnd_toEndOf="@+id/carouselview"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/carouselview"
-            app:layout_constraintTop_toBottomOf="@+id/carouselview" />
+            app:layout_constraintTop_toBottomOf="@+id/carouselview"
+            tools:layout_editor_absoluteX="8dp" />
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

@@ -25,6 +25,7 @@ import com.sonika.nepstra.pojo.OrderedProducts_pojo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,9 +37,9 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
     private List<AllProducts> allProductList;
 
     String oname, oprice, oimage, odesc;
-    Integer cat_id;
+    Integer cat_id, count;
     OrderHelper dbHelper;
-    List<OrderedProducts_pojo> cartProductsList = new ArrayList<>();
+    List<OrderedProducts_pojo> cartProductsList;
     //DetailsHelper detailsHelper;
     WomenHelper womenHelper;
     NewArrivalsHelper arrivalsHelper;
@@ -66,6 +67,8 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
         jwelleryHelper = new JwelleryHelper(context);
         sportsHelper = new SportsHelper(context);
         detailsHelper = new DetailsHelper(context);
+
+        count = 1;
         return new AllProductHolder(view);
     }
 
@@ -111,22 +114,22 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
                 oname = allProductList.get(position).getName();
                 oprice = allProductList.get(position).getPrice();
                 oimage = allProductList.get(position).getI_src();
-                cat_id = allProductList.get(position).getC_id();
+                cat_id = allProductList.get(position).getI_id();
 
-                //odesc = allProductList.get(position).getDescription();
 
                 ContentValues contentValues = new ContentValues();
                 contentValues.put("name", oname);
                 contentValues.put("price", oprice);
                 contentValues.put("imageone", oimage);
                 contentValues.put("cat_id", cat_id);
-                // contentValues.put("desc", odesc);
-
-//                Log.e("pizza", "lovet");
-//                Log.e("momo", oname);
-//                Log.e("burger", oprice);
-//                Log.e("oooo", oimage);
+                contentValues.put("count", count);
                 dbHelper.insertOrderInfo(contentValues);
+
+
+
+
+
+
                 //detailsHelper.insertdetails(contentValues);
 //                cartProductsList = dbHelper.getOrderMessage();
 //                Log.e("orderedsonika", String.valueOf(cartProductsList.size()));

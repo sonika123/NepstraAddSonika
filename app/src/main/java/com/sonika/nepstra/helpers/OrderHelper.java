@@ -73,6 +73,16 @@ public class OrderHelper extends SQLiteOpenHelper {
         cursor.close();
         return list;
     }
+    public void updateCount(String id,ContentValues cv){
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.update("user_orders",cv,"cat_id="+id,null);
+            db.close();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+    }
 
 
     //    public void delete(String id, Object name, Object amount) {

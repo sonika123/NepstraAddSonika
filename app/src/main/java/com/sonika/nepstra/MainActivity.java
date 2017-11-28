@@ -143,6 +143,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_contact) {
 
         } else if (id == R.id.nav_category) {
+            Intent i = new Intent(MainActivity.this, CategoriesActivity.class);
+            startActivity(i);
+
 
         } else if (id == R.id.nav_arts_and_craft) {
 

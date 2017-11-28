@@ -73,16 +73,6 @@ public class OrderHelper extends SQLiteOpenHelper {
         cursor.close();
         return list;
     }
-    public void updateCount(String id,ContentValues cv){
-        try {
-            SQLiteDatabase db = this.getWritableDatabase();
-            db.update("user_orders",cv,"cat_id="+id,null);
-            db.close();
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
-    }
 
 
     //    public void delete(String id, Object name, Object amount) {
@@ -102,12 +92,19 @@ public class OrderHelper extends SQLiteOpenHelper {
 
     public String GetTotal() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor GetTotal = db.rawQuery("SELECT Sum(price) AS myTotal FROM  user_orders", null);
-        String result = " ";
-        while (GetTotal.moveToNext()) {
-            result = String.valueOf(GetTotal.getDouble(GetTotal.getColumnIndex("myTotal")));
-        }
-        return result;
+        String sql = "SELECT Sum(price * count) " +
+                    "AS myTotal FROM  user_orders";
+
+
+            Cursor GetTotal = db.rawQuery(sql, null);
+            String result = " ";
+
+            while (GetTotal.moveToNext()) {
+                Cursor GetTotal1 = db.rawQuery(sql, null);
+                result = String.valueOf(GetTotal.getDouble(GetTotal1.getColumnIndex("myTotal")));
+            }
+
+            return result;
     }
 
     public void updateCount(String id,ContentValues cv){

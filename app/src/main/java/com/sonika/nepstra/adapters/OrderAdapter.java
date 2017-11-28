@@ -1,6 +1,7 @@
 package com.sonika.nepstra.adapters;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +31,9 @@ import java.util.Map;
  * Created by sonika on 5/9/2017.
  */
 
-public class OrderAdapter extends BaseAdapter{
+public class OrderAdapter extends BaseAdapter {
     Context context;
-    List<OrderedProducts_pojo> objects = new ArrayList<OrderedProducts_pojo>();
+    List<OrderedProducts_pojo> cartlist = new ArrayList<OrderedProducts_pojo>();
     int resource;
     OrderHelper dbHelper;
     private ListViewListener mListener;
@@ -39,13 +41,13 @@ public class OrderAdapter extends BaseAdapter{
 
     public OrderAdapter(Context context, List<OrderedProducts_pojo> objects, int resource) {
         this.context = context;
-        this.objects = objects;
+        this.cartlist = objects;
         this.resource = resource;
     }
 
     @Override
     public int getCount() {
-        return objects.size();
+        return cartlist.size();
     }
 
     @Override
@@ -62,65 +64,52 @@ public class OrderAdapter extends BaseAdapter{
     public View getView(final int position, View convertView, final ViewGroup parent) {
         View row = convertView;
         ViewHolder holder = null;
-        if(row == null)
-        {
-            LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+        if (row == null) {
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(resource, parent, false);
             holder = new ViewHolder();
             holder.name = row.findViewById(R.id.txt_name_add_to_cart);
-            holder.price= row.findViewById(R.id.txt_price_add_to_cart);
+            holder.price = row.findViewById(R.id.txt_price_add_to_cart);
             holder.img_product = row.findViewById(R.id.img_add_to_cart);
             holder.orderid = row.findViewById(R.id.ordered_productlist_id);
             holder.btnRemove = row.findViewById(R.id.btn_add_to_cart_remove);
             row.setTag(holder);
-        }
-        else
-        {
+        } else {
             holder = (ViewHolder) row.getTag();
         }
-        final OrderedProducts_pojo orderInfo = objects.get(position);
-
+        final OrderedProducts_pojo orderInfo = cartlist.get(position);
         dbHelper = new OrderHelper(context);
-        objects = dbHelper.getOrderMessage();
 
-        Log.e("objects",objects.get(position).getOrderedcat_id());
-
-        List<String> son = new ArrayList<>();
-        for (int i = 0; i<objects.size(); i++)
-        {
-            son.add(objects.get(i).getOrderedcat_id());
-            Log.e("fish", son.toString());
-
-        }
-
-
-
-
-
-        holder.name.setText("Name : " +orderInfo.getOrderedname());
-        holder.price.setText("Price : " +orderInfo.getOrderedprice());
+        holder.name.setText("Name : " + orderInfo.getOrderedname());
+        String itemTotalPrice = String.valueOf(Integer.valueOf(orderInfo.getCount()) * (Integer.valueOf(orderInfo.getOrderedprice())));
+        holder.price.setText(itemTotalPrice);
         Picasso.with(context).load(orderInfo.getOrderedimage()).into(holder.img_product);
+        holder.orderid.setText("Quantity: " +orderInfo.getCount() + " ");
 
-
-        for (int i =0; i<son.size(); i++)
+        int sum = 0;
+        for (int i = 0; i < cartlist.size(); i++)
         {
-
-            Log.e("xiryo", son.get(i));
-            int occurrences = Collections.frequency(son, son.get(i));
-            Log.e("prakriti", son.get(i) + ":" + occurrences);
-            holder.orderid.setText(son.get(i));
+            sum = Integer.parseInt(holder.price.getText().toString());
         }
+        Log.e("sum", String.valueOf(sum));
 
+
+//        Log.e("price", String.valueOf(holder.price.getText()));
+//        OrderHelper dbhelper = new OrderHelper(context);
+//        ContentValues cv =  new ContentValues();
+//        cv.put("price", holder.orderid.getText().toString());
+//        dbhelper.insertOrderInfo(cv);
 
         holder.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //dbHelper.delete(orderInfo.getOrderid().toString(), null, null);
-                dbHelper.delete(objects.get(position).getOrderid()
+
+                dbHelper.delete(cartlist.get(position).getOrderid()
                         .toString(), null, null);
                 Toast.makeText(context, "removed", Toast.LENGTH_SHORT).show();
                 mListener.getMyTotal();
-                objects.remove(position);
+                cartlist.remove(position);
                 notifyDataSetChanged();
             }
         });

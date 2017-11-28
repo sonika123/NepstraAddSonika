@@ -37,7 +37,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
     private List<AllProducts> allProductList;
 
     String oname, oprice, oimage, odesc;
-    Integer cat_id;
+    Integer cat_id, img_id;
     OrderHelper dbHelper;
     List<OrderedProducts_pojo> cartProductsList;
     //DetailsHelper detailsHelper;
@@ -111,14 +111,14 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
                 oname = allProductList.get(position).getName();
                 oprice = allProductList.get(position).getPrice();
                 oimage = allProductList.get(position).getI_src();
-                cat_id = allProductList.get(position).getI_id();
+                img_id = allProductList.get(position).getI_id();
 
                 ContentValues contentValues = new ContentValues();
                 ArrayList<OrderedProducts_pojo> cartItems = dbHelper.getOrderMessage();
                 for(OrderedProducts_pojo cartItem: cartItems){
-                    if(cartItem.getOrderedcat_id().equals(String.valueOf(cat_id))){
+                    if(cartItem.getOrderedcat_id().equals(String.valueOf(img_id))){
                         contentValues.put("count",cartItem.count+1);
-                        dbHelper.updateCount(cat_id.toString(),contentValues);
+                        dbHelper.updateCount(img_id.toString(),contentValues);
                         return;
                     }
                 }
@@ -126,8 +126,8 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
                 contentValues.put("name", oname);
                 contentValues.put("price", oprice);
                 contentValues.put("imageone", oimage);
-                contentValues.put("cat_id", cat_id);
-//                contentValues.put("count", count);
+                contentValues.put("cat_id", img_id);
+                contentValues.put("count", 1);
                 dbHelper.insertOrderInfo(contentValues);
 
 
@@ -152,10 +152,12 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
         oimage = allProductList.get(position).getI_src();
         odesc = allProductList.get(position).getDescription();
         cat_id = allProductList.get(position).getC_id();
+        img_id = allProductList.get(position).getI_id();
 
         if (cat_id == 29) {
             ContentValues contentValues = new ContentValues();
             contentValues.put("c_id", cat_id);
+            contentValues.put("i_id", img_id);
             contentValues.put("name", oname);
             contentValues.put("price", oprice);
             contentValues.put("imageone", oimage);
@@ -165,6 +167,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
         if (cat_id == 17) {
             ContentValues contentValues = new ContentValues();
             contentValues.put("c_id", cat_id);
+            contentValues.put("i_id", img_id);
             contentValues.put("name", oname);
             contentValues.put("price", oprice);
             contentValues.put("imageone", oimage);
@@ -174,6 +177,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
         if (cat_id == 30) {
             ContentValues contentValues = new ContentValues();
             contentValues.put("c_id", cat_id);
+            contentValues.put("i_id", img_id);
             contentValues.put("name", oname);
             contentValues.put("price", oprice);
             contentValues.put("imageone", oimage);
@@ -183,6 +187,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
         if (cat_id == 28){
             ContentValues contentValues = new ContentValues();
             contentValues.put("c_id", cat_id);
+            contentValues.put("i_id", img_id);
             contentValues.put("name", oname);
             contentValues.put("price", oprice);
             contentValues.put("imageone", oimage);
@@ -192,6 +197,7 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
         if (cat_id == 25){
             ContentValues contentValues = new ContentValues();
             contentValues.put("c_id", cat_id);
+            contentValues.put("i_id", img_id);
             contentValues.put("name", oname);
             contentValues.put("price", oprice);
             contentValues.put("imageone", oimage);
@@ -201,12 +207,15 @@ public class AllProductAdapter extends RecyclerView.Adapter<AllProductHolder> {
         if (cat_id == 27){
             ContentValues contentValues = new ContentValues();
             contentValues.put("c_id", cat_id);
+            contentValues.put("i_id", img_id);
             contentValues.put("name", oname);
             contentValues.put("price", oprice);
             contentValues.put("imageone", oimage);
             contentValues.put("desc", odesc);
             sportsHelper.insertsports(contentValues);
         }
+
+
 
     }
 

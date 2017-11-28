@@ -97,7 +97,6 @@ public class OrderedProducts extends AppCompatActivity implements ListViewListen
             super.onBackPressed();
         }
     }
-
     @Override
     public void getMyTotal() {
         String result = dbhelper.GetTotal();
@@ -196,7 +195,7 @@ public class OrderedProducts extends AppCompatActivity implements ListViewListen
 
 
 
-      //  Toast.makeText(this, allProducts.getName(), Toast.LENGTH_SHORT).show();
+//  Toast.makeText(this, allProducts.getName(), Toast.LENGTH_SHORT).show();
 
 //adding to cart
 
